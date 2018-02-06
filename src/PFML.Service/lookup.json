@@ -1,0 +1,112 @@
+{
+  "useCache": null,
+  "generate": null,
+  "dbProvider": "@[config.json:dal:dbProvider]",
+  "connectionString": "@[config.json:dal:connections:PFML.DAL.Model.DbContext:connectionString]",
+
+  "lookups": {
+
+    "lookupTables": {
+      "nameTable": "LookupName",
+      "name": "@Name",
+      "nameDescription": "@Description",
+      "propertyTable": "LookupProperty",
+      "propertyTableNameKey": "Name",
+      "property": "@Property",
+      "propertyDescription": "@Description",
+      "codeTable": "LookupCode",
+      "codeTableNameKey": "Name",
+      "code": "@Code",
+      "codeDisplay": "@Display",
+      "codeDescription": "@Description",
+      "valueTable": "LookupValue",
+      "valueTableNameKey": "Name",
+      "valueTableCodeKey": "Code",
+      "valueTablePropertyKey": "Property",
+      "value": "@Value"
+    },
+
+    "SecurityPermissionType": {
+      "codes": [
+        [ "USER", "User" ],
+        [ "GROUP", "Group" ],
+        [ "ROLE", "Role" ],
+        [ "OBJECT", "Object" ]
+      ]
+    },
+
+    "SecurityAccess": {
+      "codes": [
+        [ "NONE", "None" ],
+        [ "READ", "Read" ],
+        [ "FULL", "Full" ]
+      ]
+    }
+
+    //"state": {
+    //    "name": "State",
+    //    "nameDescription": "List of US states and postal abbreviations",
+    //    "properties": {
+    //        "ReciprocalStateInd": "Designates if state participates in reciprocity"
+    //    },
+    //    "codeTable": "state",
+    //    "code": "@state_code",
+    //    "codeDisplay": "@state_name",
+    //    "codeDescription": "@state_name",
+    //    "values": {
+    //        "ReciprocalStateInd": "@reciprocal_state_ind"
+    //    }
+    //},
+
+    //"systemCodes": {
+    //    "nameTable": "reference_table",
+    //    "nameTableCondition": "reference_table_name like 'SYSTEM_CODE@%'",
+    //    "name": "@reference_table_name|SYSTEM_CODE@",
+    //    "nameDescription": "@reference_table_name|SYSTEM_CODE@",
+    //    "properties": {
+    //        "Category": "Reference code category",
+    //        "DisplaySortOrder": "Sort order for display purposes"
+    //    },
+    //    "codeTable": "system_code",
+    //    "codeTableNameKey": "code_type",
+    //    "code": "@code_value",
+    //    "codeDisplay": "@description",
+    //    "codeDescription": "@description",
+    //    "values": {
+    //        "Category": "@code_category",
+    //        "DisplaySortOrder": "@display_sort_order"
+    //    }
+    //}
+
+    //"nonSystemCodes": {
+    //    "nameTable": "reference_table",
+    //    "nameTableCondition": "reference_table_name not like 'SYSTEM_CODE@%' and reference_table_name <> 'REFERENCE_TABLE' and reference_table_name not in ('PENDING_ITEM_PROCESS_XR', 'RETIREMENT_PLAN_CONTRIB_DETAIL_TYPE_XR', 'SERVICE_PURCHASE_YIELD_FACTOR', 'SERVICE_PURCHASE_YIELD_MONTHLY_MULTIPLIER')",
+    //    "name": "@reference_table_name",
+    //    "nameDescription": "@reference_table_description",
+    //    "codeTable": "@reference_table_name",
+    //    "code": "@@key_name"
+    //},
+
+    //"testIndividual": {
+    //    "name": "TestIndividual",
+    //    "nameDescription": "Test for individually added lookups",
+    //    "properties": {
+    //        "Sample1": "Sample property #1",
+    //        "Sample2": "Sample property #2"
+    //    },
+    //    "codes": [
+    //        { "code":"ONE", "display": "Number one", "description":"Number one", "values":{ "Sample1": "1.1", "Sample2":  "2.1"} },
+    //        [ "TWO", "Number two", "Number two", { "Sample1": "1.2", "Sample2":  "2.2"} ],
+    //        [ "THREE", "Number three", "Number three", { "Sample1": "1.3", "Sample2":  "2.3"} ]
+    //    ]
+    //},
+
+    //"testIndividualMinimal": {
+    //    "codes": [
+    //        [ "ONE", "Number One"],
+    //        [ "TWO", "Number Two"]
+    //    ]
+    //}
+
+  }
+}

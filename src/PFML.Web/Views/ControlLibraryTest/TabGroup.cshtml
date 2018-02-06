@@ -1,0 +1,71 @@
+﻿@using (Form())
+{
+    @using (TabGroup(headingText: "Parent-level FORM element", id: "tabGroup1"))
+    {
+        @using (Panel(labelText: "Tab #1"))
+        {
+            @TextBox(labelText: "Tab1 - Field", dataSource: "Group1_Tab1_Field")
+        }
+        @using (Panel(labelText: "Tab #2", id: "tab1_2"))
+        {
+            @TextBox(labelText: "Tab2 - Field", dataSource: "Group1_Tab2_Field")
+        }
+        @using (Panel(labelText: "Tab #3"))
+        {
+            @TextBox(labelText: "Tab3 - Field", dataSource: "Group1_Tab3_Field")
+        }
+    }
+
+    @using (Panel(borderVisible: false))
+    {
+        @Button(transition: "Refresh")
+        @Button(transition: "Close")
+    }
+}
+
+<br />
+<hr />
+<br />
+
+@using (TabGroup(headingText: "Tab-specific FORM element"))
+{
+    @using (Panel(labelText: "Tab #1"))
+    {
+        @using (Form())
+        {
+            @TextBox(labelText: "Tab1 - Field", dataSource: "Group2_Tab1_Field")
+            <br />
+            @using (Panel(borderVisible: false, labelColumns: 0, controlColumns: 12))
+            {
+                @Button(transition: "Refresh")
+                @Button(transition: "Close")
+            }
+        }
+    }
+    @using (Panel(labelText: "Tab #2"))
+    {
+        @using (Form())
+        {
+            @TextBox(labelText: "Tab2 - Field", dataSource: "Group2_Tab2_Field")
+            <br />
+            @using (Panel(borderVisible: false, labelColumns: 0, controlColumns: 12))
+            {
+                @Button(transition: "Refresh")
+                @Button(transition: "Close")
+            }
+        }
+    }
+    @using (Panel(labelText: "Tab #3"))
+    {
+        @using (Form())
+        {
+            @TextBox(labelText: "Tab3 - Field", dataSource: "Group2_Tab3_Field")
+            <br />
+            @using (Panel(borderVisible: false, labelColumns: 0, controlColumns: 12))
+            {
+                @Button(transition: "Refresh")
+                @Button(transition: "Close")
+            }
+        }
+    }
+}

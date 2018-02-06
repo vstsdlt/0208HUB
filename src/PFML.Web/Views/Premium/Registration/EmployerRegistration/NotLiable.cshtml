@@ -1,0 +1,26 @@
+﻿@using (Form())
+{
+    @using (Panel(headingText: "Not Liable for PFML in State", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        <p>As a result of information entered, your are:</p>
+        <br />
+        <p>Determined not liable based on the wage and employment information furnished. An employer account number will not be issued until you have actually paid wages and met statutory liability requirements for paying contributions.</p>
+        <p>Return to this site to register once this business has bet the liability thresholds for the business type (check the business type mentioned below for an explanation of each type).</p>
+        <p><b>If you do not agree with the above determination you may file an appeal within fifteen (15) days from @DateTime.Now.ToString("MMMM dd, yyyy").</b> Print this page and include it with your appeal.</p>
+        <p>Contact the State support if you have any questions regarding this determination.</p>
+    }
+
+    @using (Panel(headingText: "Liability Thresholds", defaultControlColumns: 4, defaultLabelColumns: 3))
+    {
+        @Data(labelText: "Non agricultural (regular) employment", text: "The total payroll for any calendar quarter for State employment is $450 or more, or if there are one or more persons (part-time workers included) in employment in any part of the week in each of 20 weeks within a calendar year.")
+        @Data(labelText: "Agricultural employment", text: "The total payroll for any calendar quarter for State employment is $20,000 or more, or if there are ten or more persons (part time workers included) in employment at any time in each of 20 weeks within a calendar year.")
+        @Data(labelText: "Domestic employment", text: "The total payroll for any calendar quarter for State employment is $1000 or more.")
+        @Data(labelText: "Experience transfer", text: "The employer acquires the business from another employer who was subject to the Law of State at the time of the acquisition.")
+    }
+
+    @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+    {
+        @Button(transition: "Previous")
+        @Button(transition: "Home", text: "Close")
+    }
+}

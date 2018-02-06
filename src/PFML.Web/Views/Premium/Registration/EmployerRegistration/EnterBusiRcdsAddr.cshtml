@@ -1,0 +1,56 @@
+﻿@Html.Partial("WizardHeader", Machine["ListSection"], new ViewDataDictionary(this.ViewData) { { "current", Machine["CurrentSection"] }, { "showHeader", Machine["ShowHeader"] } })
+
+@using (Form())
+{
+    @using (Panel(headingText: "Enter Business Records Address", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        <p>Please enter the business records address for this employer. This address cannot be a Post Office box or private mail box. DO NOT: enter a client site, other temporary job site, or employee home address.</p>
+        @SelectBox(labelText: "Same as:", lookupName: LookupTable.AddressType, lookupFilter: $"LookupFilterAddressType() ^ code", dataSource: "SameAsBusiAddr", blankItemText: "Select One")
+      
+        @using (Panel(borderVisible: false, controlColumns: 12, labelColumns: 0, defaultControlColumns: 4, defaultLabelColumns: 4))
+        {
+            @TextBox(labelText: "Address Line 1:", formatter: Formatter.TextAlphaNumeric, dataSource: "BusinessAddress.Address.AddressLine1", required: "SameAsBusiAddr != 'MAIL' && SameAsBusiAddr != 'PHYS'", looseValidation: true, securityFilter: "SameAsBusiAddr != 'MAIL' && SameAsBusiAddr != 'PHYS'")
+            @TextBox(labelText: "Address Line 2:", formatter: Formatter.TextAlphaNumeric, dataSource: "BusinessAddress.Address.AddressLine2", looseValidation: true, securityFilter: "SameAsBusiAddr != 'MAIL' && SameAsBusiAddr != 'PHYS'")
+            @TextBox(labelText: "City:", formatter: Formatter.TextAlpha, dataSource: "BusinessAddress.Address.City", required: "SameAsBusiAddr != 'MAIL' && SameAsBusiAddr != 'PHYS'", looseValidation: true, securityFilter: "SameAsBusiAddr != 'MAIL' && SameAsBusiAddr != 'PHYS'")
+            @SelectBox(labelText: "State:", lookupName: LookupTable.StatePrvnc, lookupFormat: "{Code} - {Display}", dataSource: "BusinessAddress.Address.StateCode", required: "SameAsBusiAddr != 'MAIL' && SameAsBusiAddr != 'PHYS'", securityFilter: "SameAsBusiAddr != 'MAIL' && SameAsBusiAddr != 'PHYS'")
+            @TextBox(labelText: "ZIP/Postal Code:", formatter: Formatter.Postal, dataSource: "BusinessAddress.Address.Zip", required: "SameAsBusiAddr != 'MAIL' && SameAsBusiAddr != 'PHYS'", securityFilter: "SameAsBusiAddr != 'MAIL' && SameAsBusiAddr != 'PHYS'")
+            @SelectBox(labelText: "Country:", lookupName: LookupTable.Country, lookupFormat: "{Code} - {Display}", dataSource: "BusinessAddress.Address.CountryCode", required: "SameAsBusiAddr != 'MAIL' && SameAsBusiAddr != 'PHYS'", securityFilter: "SameAsBusiAddr != 'MAIL' && SameAsBusiAddr != 'PHYS'")
+            @TextBox(labelText: "Phone Number:", formatter: Formatter.Phone, dataSource: "BusinessAddress.Address.PhoneNumber", required: "SameAsBusiAddr != 'MAIL' && SameAsBusiAddr != 'PHYS'", securityFilter: "SameAsBusiAddr != 'MAIL' && SameAsBusiAddr != 'PHYS'")
+            @TextBox(labelText: "Fax:", formatter: Formatter.TextNumeric, dataSource: "BusinessAddress.Address.FaxNumber", securityFilter: "SameAsBusiAddr != 'MAIL' && SameAsBusiAddr != 'PHYS'")
+            @TextBox(labelText: "E-Mail:", formatter: Formatter.Email, dataSource: "BusinessAddress.Address.Email", securityFilter: "SameAsBusiAddr != 'MAIL' && SameAsBusiAddr != 'PHYS'")
+            @TextBox(labelText: "Re-Enter E-Mail:", formatter: Formatter.Email, dataSource: "BusiAddrReTypeEmail", securityFilter: "SameAsBusiAddr != 'MAIL' && SameAsBusiAddr != 'PHYS'")
+        }
+
+        @using (Panel(borderVisible: false, controlColumns: 12, labelColumns: 0, defaultControlColumns: 4, defaultLabelColumns: 4, cssClass: "bold"))
+        {
+            @Data(labelText: "Address Line 1:", dataSource: "EntityAddress.Address.AddressLine1", securityFilter: "SameAsBusiAddr == 'MAIL'")
+            @Data(labelText: "Address Line 2:", dataSource: "EntityAddress.Address.AddressLine2", securityFilter: "SameAsBusiAddr == 'MAIL'")
+            @Data(labelText: "City:", dataSource: "EntityAddress.Address.City", securityFilter: "SameAsBusiAddr == 'MAIL'")
+            @Data(labelText: "State:", lookupName: LookupTable.StatePrvnc, lookupFormat: "{Code} - {Display}", dataSource: "EntityAddress.Address.StateCode", securityFilter: "SameAsBusiAddr == 'MAIL'")
+            @Data(labelText: "ZIP/Postal Code:", dataSource: "EntityAddress.Address.Zip", securityFilter: "SameAsBusiAddr == 'MAIL'")
+            @Data(labelText: "Country:", lookupName: LookupTable.Country, lookupFormat: "{Code} - {Display}", dataSource: "EntityAddress.Address.CountryCode", securityFilter: "SameAsBusiAddr == 'MAIL'")
+            @Data(labelText: "Phone Number:", formatter: Formatter.Phone, dataSource: "EntityAddress.Address.PhoneNumber", securityFilter: "SameAsBusiAddr == 'MAIL'")
+            @Data(labelText: "Fax:", dataSource: "EntityAddress.Address.FaxNumber", securityFilter: "SameAsBusiAddr == 'MAIL'")
+            @Data(labelText: "E-Mail:", dataSource: "EntityAddress.Address.Email", securityFilter: "SameAsBusiAddr == 'MAIL'")
+        }
+
+        @using (Panel(borderVisible: false, controlColumns: 12, labelColumns: 0, defaultControlColumns: 4, defaultLabelColumns: 4, cssClass: "bold"))
+        {
+            @Data(labelText: "Address Line 1:", dataSource: "PhysicalAddress.Address.AddressLine1", securityFilter: "SameAsBusiAddr == 'PHYS' && HasPhysicalAddress")
+            @Data(labelText: "Address Line 2:", dataSource: "PhysicalAddress.Address.AddressLine2", securityFilter: "SameAsBusiAddr == 'PHYS' && HasPhysicalAddress")
+            @Data(labelText: "City:", dataSource: "PhysicalAddress.Address.City", securityFilter: "SameAsBusiAddr == 'PHYS' && HasPhysicalAddress")
+            @Data(labelText: "State:", lookupName: LookupTable.StatePrvnc, lookupFormat: "{Code} - {Display}", dataSource: "PhysicalAddress.Address.StateCode", securityFilter: "SameAsBusiAddr == 'PHYS' && HasPhysicalAddress")
+            @Data(labelText: "ZIP/Postal Code:", dataSource: "PhysicalAddress.Address.Zip", securityFilter: "SameAsBusiAddr == 'PHYS' && HasPhysicalAddress")
+            @Data(labelText: "Country:", lookupName: LookupTable.Country, lookupFormat: "{Code} - {Display}", dataSource: "PhysicalAddress.Address.CountryCode", securityFilter: "SameAsBusiAddr == 'PHYS' && HasPhysicalAddress")
+            @Data(labelText: "Phone Number:", formatter: Formatter.Phone, dataSource: "PhysicalAddress.Address.PhoneNumber", securityFilter: "SameAsBusiAddr == 'PHYS' && HasPhysicalAddress")
+            @Data(labelText: "Fax:", dataSource: "PhysicalAddress.Address.FaxNumber", securityFilter: "SameAsBusiAddr == 'PHYS' && HasPhysicalAddress")
+            @Data(labelText: "E-Mail:", dataSource: "PhysicalAddress.Address.Email", securityFilter: "SameAsBusiAddr == 'PHYS' && HasPhysicalAddress")
+        }
+    }
+
+    @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+    {
+        @Button(transition: "Previous")
+        @Button(transition: "Next")
+    }
+}

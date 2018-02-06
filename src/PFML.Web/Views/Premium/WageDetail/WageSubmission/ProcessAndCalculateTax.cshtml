@@ -1,0 +1,49 @@
+﻿@using FACTS.Framework.Lookup;
+@Html.Partial("WizardHeader", Machine["ListSection"], new ViewDataDictionary(this.ViewData) { { "current", (LookupCode)Machine["CurrentSection"] }, { "showHeader", (bool)Machine["ShowHeader"] } })
+
+@using (Form())
+{
+        @using (Panel(headingText: "Reporting Information", defaultControlColumns: 4, defaultLabelColumns: 4))
+        {
+            @Data(labelText: "Employment and Wages Paid for the Quarter:", dataSource: "WageUnitDetail.ReportingQuarter", lookupName: LookupTable.Quarter,  cssClass: "bold")
+            @Data(labelText: "Year:", dataSource: "WageUnitDetail.ReportingYear", cssClass: "bold")
+            @Data(labelText: "Submission Type:", dataSource: "WageUnitDetail.AdjReasonDisplay", formatter: Formatter.Currency, lookupName: LookupTable.WageDetailAdjReasonCode, cssClass: "bold")
+            @Data(labelText: "Taxable Wage Base:", dataSource: "WageUnitDetail.GrossWages", formatter: Formatter.Currency,  cssClass: "bold")
+            @Data(labelText: "Contribution Rate:", dataSource: "WageUnitDetail.ContributionRate", formatter: Formatter.Percent, formatDecimals: 2,  cssClass: "bold")
+        }
+
+        @using (Panel(panelLayout: PanelLayout.Stacked, headingText: "Quarterly Calculations"))
+        {
+            <ul>
+                <li>Your information has been saved but NOT yet submitted. Click Submit to submit your Employment and Quarterly Wage Detail filing.</li>
+             </ul>
+        }
+        @using (Panel(borderVisible: false, defaultControlColumns: 6, defaultLabelColumns: 6))
+        { 
+            @Data(labelText: "Quaterly Wages", controlColumns: 3, labelColumns: 3, cssClass: "bold")
+            @Data(labelText: "Amount", controlColumns: 3, labelColumns: 3)
+            @Data(controlColumns: 2, labelColumns: 2)
+            @Data(labelText: "Total Gross Wages", dataSource: "WageUnitDetail.GrossWages", formatter: Formatter.Currency, controlColumns: 6, labelColumns: 2)
+            @Data(controlColumns: 2, labelColumns: 2)
+            @Data(labelText: "Total Taxable Wages", dataSource: "WageUnitDetail.GrossWages", formatter: Formatter.Currency, controlColumns: 6, labelColumns: 2)
+            @Data(labelText: "Contributions", controlColumns: 6, labelColumns: 6)
+            @Data(controlColumns: 2, labelColumns: 2)
+            @Data(labelText: "Contributions Due", dataSource: "WageUnitDetail.EmployerAccountTransactionDto.OwedAmount", formatter: Formatter.Currency, controlColumns: 6, labelColumns: 2)
+            @Data(labelText: "Amount Due", controlColumns: 6, labelColumns: 6)
+            @Data(controlColumns: 2, labelColumns: 2)
+            @Data(labelText: "Quarterly Amount Due", dataSource: "WageUnitDetail.EmployerAccountTransactionDto.OwedAmount", formatter: Formatter.Currency, controlColumns: 6, labelColumns: 2)
+        }
+
+        @using (Panel(panelLayout: PanelLayout.Stacked, headingText: "Employment and Wage Details Certification"))
+        {
+            <p>You are asked to certify that all of the information provided in this filing is complete, true and accurate. State law provides for civil fines and criminal penalties for misrepresentation, evasion, willful nondisclosure, and failure or refusal to furnish reports or requested information to this agency.</p>
+
+            @CheckBox(labelText: "Under penalties of perjury, I hereby certify that, to the best of my knowledge, the provided information in this filing is complete and true, and accurate.", labelColumns: 3, controlColumns: 1, dataSource: "IsUnderPenality", required: "true")
+        }
+
+        @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+        {
+            @Button(transition: "Previous")
+            @Button(transition: "Submit")
+        }
+}

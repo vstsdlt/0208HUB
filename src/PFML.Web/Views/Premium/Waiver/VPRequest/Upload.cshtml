@@ -1,0 +1,13 @@
+﻿@using (Form())
+{
+	@using (Panel(headingText: "Upload Supporting Document", panelLayout: PanelLayout.Grid, modalStyle: ModalStyle.Large, defaultControlColumns: 6, defaultLabelColumns: 6))
+	{
+		@*@TextBox(labelText: "Document Name:", dataSource: $"VPRequestForm.FormAttachments[{Machine["DocumentIndex"]}.Document.?DocumentName", required: "true", maxLength: 255);*@ //TODO - Kumar - Need to check with Dave and correct the syntex
+		@TextBox(labelText: "Document Name:", dataSource: "DocumentName", required: "true", maxLength: 255);
+		@TextBox(labelText: "Document Description:", dataSource: "DocumentDescription", required: "true", maxLength: 500, multiLine: true);
+
+		@Button(transition: "Next", text: "Upload", controlColumns: 1, labelColumns: 3)
+		@Button(transition: "Close", controlColumns: 3, labelColumns: 3)
+
+	}
+}

@@ -1,0 +1,14 @@
+﻿
+@using (Form())
+{
+    @using (Panel(headingText: "Employer Appeals", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        <p>If you wish to request a review of or appeal a determination, enter the Document Identification Number below and select 'Next'. After your request is submitted, Agency Staff may contact you regarding the issue. For more important information regarding the process, please read What you need to know about the appeal process.</p>
+        @TextBox(labelText: "Document Identification Number:", dataSource: "AppealDetails.PremiumAppealDetailDto.CorrespondenceId", required: "true", formatter: Formatter.Number)
+    }
+    @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+    {
+        @Button(transition: "Previous")
+        @Button(transition: "Next")
+    }
+}

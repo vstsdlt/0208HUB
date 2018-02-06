@@ -1,0 +1,18 @@
+﻿@using (Form())
+{
+
+    <a href="#" onclick="sample();">Sample Popup</a>
+
+    @using (Panel(headingText: "Control Library Test : Menu", panelLayout: PanelLayout.Stacked))
+    {
+        @using (ButtonGroup(autoButtons: true, buttonGroupStyle: ButtonGroupStyle.Vertical)) { }
+    }
+}
+
+@section Script {
+    <script>
+        function sample() {
+            $.get("/Controller/Sample?id=1", function (data, status) { window.open(data, "_blank", "menubar=no,status=no,toolbar=no,width=800,height=600)"); });
+        }
+    </script>
+}

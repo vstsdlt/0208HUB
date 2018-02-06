@@ -1,0 +1,18 @@
+﻿@Html.Partial("WizardHeader", Machine["ListSection"], new ViewDataDictionary(this.ViewData) { { "current", Machine["CurrentSection"] }, { "showHeader", Machine["ShowHeader"] } })
+
+@using (Form())
+{
+    @using (Panel(headingText: "Employment Liability – Number of Employees and Weeks Worked", defaultControlColumns:4,defaultLabelColumns:4))
+    {
+        @RadioButtonGroup(labelText: "During the current calendar year or the preceding four calendar years did this employer employ one or more persons in each of 20 separate weeks for covered services in non agricultural (regular) employment?", lookupName: LookupTable.BoolYesNo, lookupSort: "{DisplaySortOrder}", dataSource: "EmployerRegistration.EmployerDto.EmployerLiability.HasEmployed1In20Weeks", required:"true")
+        @RadioButtonGroup(labelText: "During the current calendar year or the preceding four calendar years did this employer have ten (10) or more employees in each of 20 separate weeks in agricultural employment?", lookupName: LookupTable.BoolYesNo, lookupSort: "{DisplaySortOrder}", dataSource: "EmployerRegistration.EmployerDto.EmployerLiability.HasEmployed10In20Weeks", required: "true")
+        @SelectBox(labelText: "If yes to any of the above, select the quarter and year during which the 20th week was met:", dataSource: "EmployerRegistration.EmployerDto.EmployerLiability.LiabilityAmountMetYear", securityFilter: "EmployerRegistration.EmployerDto.EmployerLiability.HasEmployed1In20Weeks=='Y' || EmployerRegistration.EmployerDto.EmployerLiability.HasEmployed10In20Weeks=='Y'", required: "EmployerRegistration.EmployerDto.EmployerLiability.HasEmployed1In20Weeks=='Y' || EmployerRegistration.EmployerDto.EmployerLiability.HasEmployed10In20Weeks=='Y'", labelColumns:4,controlColumns:2, items: (List<FACTS.Framework.Support.HtmlValueText>)Machine["YearList"], blankItemText: "Year")
+        @SelectBox(labelText: "", dataSource: "EmployerRegistration.EmployerDto.EmployerLiability.LiabilityAmountMetQuarter", securityFilter: "EmployerRegistration.EmployerDto.EmployerLiability.HasEmployed1In20Weeks=='Y' || EmployerRegistration.EmployerDto.EmployerLiability.HasEmployed10In20Weeks=='Y'", required: "EmployerRegistration.EmployerDto.EmployerLiability.HasEmployed1In20Weeks=='Y' || EmployerRegistration.EmployerDto.EmployerLiability.HasEmployed10In20Weeks=='Y'", blankItemText: "Enter Quater", lookupName: LookupTable.Quarter,labelColumns:0,controlColumns:2, lookupSort: "{DisplaySortOrder}")
+    }
+
+    @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+    {
+        @Button(transition: "Previous")
+        @Button(transition: "Next")
+    }
+}

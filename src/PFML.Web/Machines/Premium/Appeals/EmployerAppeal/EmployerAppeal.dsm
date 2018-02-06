@@ -1,0 +1,52 @@
+<Machine IsPublic="False" IsExternal="False" RequirePersonID="False" RequireAgencyID="False" StartState="EnterDocumentId">
+  <States>
+    <Page Name="EnterDocumentId">
+      <Transitions>
+        <State Name="Next" IsDefault="False" IgnoreData="False" State="ValidateDocumentId" />
+      </Transitions>
+    </Page>
+    <Page Name="EnterInformation">
+      <Transitions>
+        <State Name="Previous" IsDefault="False" IgnoreData="True" State="EnterDocumentId" />
+        <State Name="Next" IsDefault="False" IgnoreData="False" State="Confirmation" />
+        <State Name="Select" IsDefault="False" IgnoreData="False" State="PopulateAddress" />
+      </Transitions>
+    </Page>
+    <Page Name="Confirmation">
+      <Transitions>
+        <State Name="Previous" IsDefault="False" IgnoreData="True" State="EnterInformation" />
+        <State Name="Submit" IsDefault="False" IgnoreData="False" State="SubmitAppeal" />
+      </Transitions>
+    </Page>
+    <Page Name="AppealFiled">
+      <Transitions>
+        <End Name="Home" IsDefault="False" IgnoreData="False" />
+      </Transitions>
+    </Page>
+    <Operation Name="SubmitAppeal" Service="Premium.Appeals.EmployerAppeal" Operation="SubmitAppeal" ResultProperty="AppealDetails">
+      <Parameters>
+        <Parameter DataSource="AppealDetails" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="AppealFiled" />
+      </Transitions>
+    </Operation>
+    <Operation Name="ValidateDocumentId" Service="Premium.Appeals.EmployerAppeal" Operation="ValidateDocumentId" ResultProperty="AppealDetails">
+      <Parameters>
+        <Parameter DataSource="AppealDetails" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="EnterInformation" />
+      </Transitions>
+    </Operation>
+    <Operation Name="PopulateAddress" Service="Premium.Appeals.EmployerAppeal" Operation="PopulateAddress" ResultProperty="AppealDetails">
+      <Parameters>
+        <Parameter DataSource="AppealDetails" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="EnterInformation" />
+      </Transitions>
+    </Operation>
+  </States>
+  <Designer>Kj0iSXNSb3VuZGVkQ29ybmVycz1UcnVlCUJyaWRnZVR5cGU9Tm9uZSIARW50ZXJEb2N1bWVudElkPSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249MzAwLDI0MCIARW50ZXJEb2N1bWVudElkLk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jNAlTdGFydFBvaW50PTM5OS45OTk2LDI0MAlFbmRQb2ludD00NDAsMTQwCU1pZFBvaW50cz00MDEuMzMzMzMzMzMzMzMzLDE0MC42NjY2NjY2NjY2NjcJVGFyZ2V0Q29ubmVjdG9yPWMxNCIARW50ZXJJbmZvcm1hdGlvbj0iQ29sb3I9I0ZGMDA3MkM2CVBvc2l0aW9uPTU2MCwyNDAiAEVudGVySW5mb3JtYXRpb24uUHJldmlvdXM9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jMTQJU3RhcnRQb2ludD01NzIsMzAwCUVuZFBvaW50PTQyMCwzMDAJVGFyZ2V0Q29ubmVjdG9yPWMxNyIARW50ZXJJbmZvcm1hdGlvbi5OZXh0PSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzE2CVN0YXJ0UG9pbnQ9NjgwLDI2MAlFbmRQb2ludD03OTIsMjYwCVRhcmdldENvbm5lY3Rvcj1jMTMiAEVudGVySW5mb3JtYXRpb24uU2VsZWN0PSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzQJU3RhcnRQb2ludD02NTkuOTk5NiwyNDAJRW5kUG9pbnQ9NjYwLjAwMDQsMTgwCVRhcmdldENvbm5lY3Rvcj1jMTAiAENvbmZpcm1hdGlvbj0iQ29sb3I9I0ZGMDA3MkM2CVBvc2l0aW9uPTc4MCwyNDAiAENvbmZpcm1hdGlvbi5QcmV2aW91cz0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxNAlTdGFydFBvaW50PTc5MiwzMDAJRW5kUG9pbnQ9NjgwLDMwMAlUYXJnZXRDb25uZWN0b3I9YzE3IgBDb25maXJtYXRpb24uU3VibWl0PSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzQJU3RhcnRQb2ludD04NzkuOTk5NiwyNDAJRW5kUG9pbnQ9OTAwLDE0MAlNaWRQb2ludHM9ODgwLDE0MAlUYXJnZXRDb25uZWN0b3I9YzE0IgBBcHBlYWxGaWxlZD0iQ29sb3I9I0ZGMDA3MkM2CVBvc2l0aW9uPTk4MCwyNDAiAEFwcGVhbEZpbGVkLkhvbWU9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jNglTdGFydFBvaW50PTEwNDAsMzIwCUVuZFBvaW50PTEwNDAsMzYwIgBTdWJtaXRBcHBlYWw9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj05MDAsMTAwIgBTdWJtaXRBcHBlYWwuTmV4dD0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxNwlTdGFydFBvaW50PTEwMjAsMTQwCUVuZFBvaW50PTEwNDAsMjQwCU1pZFBvaW50cz0xMDM5LjMzMzMzMzMzMzMzLDE0MS4zMzMzMzMzMzMzMzMJVGFyZ2V0Q29ubmVjdG9yPWMwIgBWYWxpZGF0ZURvY3VtZW50SWQ9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj00NDAsMTAwIgBWYWxpZGF0ZURvY3VtZW50SWQuTmV4dD0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxNwlTdGFydFBvaW50PTU2MCwxNDAJRW5kUG9pbnQ9NTk5Ljk5OTYsMjQwCU1pZFBvaW50cz02MDAsMTQwCVRhcmdldENvbm5lY3Rvcj1jMSIAUG9wdWxhdGVBZGRyZXNzPSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249NjQwLDEwMCIAUG9wdWxhdGVBZGRyZXNzLk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jOQlTdGFydFBvaW50PTcyMC4wMDA0LDE4MAlFbmRQb2ludD02ODAsMjQwCU1pZFBvaW50cz03MjAsMjM5LjMzMzMzMzMzMzMzMwlUYXJnZXRDb25uZWN0b3I9YzUi</Designer>
+</Machine>

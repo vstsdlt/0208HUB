@@ -1,0 +1,16 @@
+@using (Form())
+{
+	@using (Panel(headingText: "Voluntary Plan Waiver - Request Form List", panelLayout: PanelLayout.Grid, defaultLabelColumns: 0, defaultControlColumns: 12))
+	{
+		@Button(transition: "New", text: "New VP Waiver Request")
+		@using (DataTable(dataSource: "Forms", searchable: false, dataTableHeight: DataTableHeight.Full, recordCountInfo: false))
+		{
+			@DataTableColumn(columnName: "ID #", dataSource: "FormId", formatter: Formatter.Number, columnAlign: ColumnAlign.Center, width: 10)
+			@DataTableColumn(columnName: "Last Updated Date", dataSource: "UpdateDateTime", formatStyle: "MM/dd/yyyy", formatter: Formatter.Date)
+			@DataTableColumn(columnName: "Start Date", dataSource: "StartDate", formatStyle: "MM/dd/yyyy", formatter: Formatter.Date, canSort: false)
+			@DataTableColumn(columnName: "End Date", dataSource: "EndDate", formatStyle: "MM/dd/yyyy", formatter: Formatter.Date, canSort: false)
+			@DataTableColumn(columnName: "Status", dataSource: "StatusCode", lookupName: LookupTable.WaiverRequestStatus, canSort: false)
+			@DataTableColumn(columnName: "View", text: "View", targetDataSource: "Form", transition: "View", canSort: false)
+		}
+	}
+}

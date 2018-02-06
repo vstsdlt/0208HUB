@@ -1,0 +1,35 @@
+﻿@using (Form())
+{
+	@using (Panel(headingText: "Basic", panelLayout: PanelLayout.Stacked))
+	{
+		@BulletedList(dataSource: "LookupBasic", lookupName: LookupTable.State)
+		@Button(dataSource: "LookupBasic", lookupName: LookupTable.State)
+		@CheckBox(dataSource: "LookupBasicCheckBox", lookupName: LookupTable.State)
+		<p>test</p>
+		@RadioButton(dataSource: "LookupBasicRadioButton", lookupName: LookupTable.State)
+		@*@SelectBox(dataSource: "LookupInt", lookupName: LookupTable.DetailFund)*@
+	}
+	<br />
+	@using (Panel(headingText: "Formatting : [{code} - {display}]", panelLayout: PanelLayout.Stacked))
+	{
+		@BulletedList(lookupName: LookupTable.State, lookupFormat: $"{{code}} - {{display}}")
+	}
+	<br />
+	@using (Panel(headingText: "Sorting : [{code}]", panelLayout: PanelLayout.Stacked))
+	{
+		@BulletedList(lookupName: LookupTable.State, lookupSort: "{code}", lookupFormat: "{code} - {display}")
+	}
+	<br />
+	@using (Panel(headingText: $"Filtering : [{LookupTable_State_Properties.ReciprocalStateInd}='Y']", panelLayout: PanelLayout.Stacked))
+	{
+		@BulletedList(lookupName: LookupTable.State, lookupFilter: $"{LookupTable_State_Properties.ReciprocalStateInd}='Y'")
+	}
+	<br />
+	@using (Panel(headingText: "Filtering : [fips ?? 13 >= 10 && fips ?? 13 <= 15]", panelLayout: PanelLayout.Stacked))
+	{
+		@BulletedList(lookupName: LookupTable.State, lookupFilter: "fips ?? 13 >= 10 && fips ?? 13 <= 15")
+	}
+	<br />
+	@Button(transition: "Refresh")
+	@Button(transition: "Close")
+}

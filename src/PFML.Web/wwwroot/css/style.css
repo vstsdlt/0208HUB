@@ -1,0 +1,40 @@
+﻿.buttonlink {
+    background-color: transparent;
+    text-decoration: underline;
+    border: none;
+    border: 0;
+    color: blue;
+    cursor: pointer;
+
+}
+
+.buttonlink:active, .buttonlink:focus, .buttonlink:hover {
+    background-color: transparent;
+    text-decoration: underline;
+    border: none;
+    border: 0;
+    color: blue;
+    cursor: pointer;
+    }
+
+.bold-text {
+    font-weight: 700;
+}
+
+.boldBigger {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.form-horizontal .control-label .bold-text {
+    text-align: left;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.form-horizontal .control-label .boldBigger {
+    text-align: left;
+    font-weight: 700;
+    font-size: 14px;
+}
+

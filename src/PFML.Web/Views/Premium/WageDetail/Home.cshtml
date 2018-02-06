@@ -1,0 +1,58 @@
+﻿@using (Form())
+{
+    @using (Panel(headingText: "Employment and Wage Detail Home", panelLayout: PanelLayout.Stacked))
+    {
+        @using (Panel(headingText: "", panelLayout: PanelLayout.Grid, defaultControlColumns: 6, defaultLabelColumns: 0, controlColumns: 3, labelColumns: 0, cssClass: "text-left", borderVisible: false))
+        {
+            @using (Panel(panelLayout: PanelLayout.Stacked, borderVisible: false))
+            {
+                @Button(text: "Submit Employment and Quarterly Wage Detail", transition: "SubmitWage", labelColumns: 0, controlColumns: 6, cssClass: "text-left align-left btnlink .btnlink.btn-default:hover bold")
+                @Data(text: "Submit Employment and Quarterly Wage Detail Records for current or prior quarters by using one of four filing methods. Contributions, Interest, and Penalties will be calculated online through this process.", labelColumns: 0, controlColumns: 6)
+            }
+
+            @using (Panel(panelLayout: PanelLayout.Stacked, borderVisible: false))
+            {
+                @Button(text: "Adjustments", labelColumns: 0, controlColumns: 6, cssClass: "text-left align-left btnlink .btnlink.btn-default:hover bold")
+                @Data(text: "Adjust previously submitted Employment and Wage Detail records. Upload a file of adjustments, or select and modify specific records online.", labelColumns: 0, controlColumns: 6)
+            }
+
+
+            @using (Panel(panelLayout: PanelLayout.Stacked, borderVisible: false))
+            {
+                @Button(text: "View Submission History", labelColumns: 0, controlColumns: 6, cssClass: "text-left align-left btnlink .btnlink.btn-default:hover bold")
+                @Data(text: "View basic information for each original and adjusted wage detail submission. The data includes the Submission Date and Time, Filing Method, Errors, Number of Records Processed, and Gross Wages Processed.", labelColumns: 0, controlColumns: 6)
+            }
+
+           
+
+            @using (Panel(panelLayout: PanelLayout.Stacked, borderVisible: false))
+            {
+                @Button(text: "Recalculate Amounts Due", labelColumns: 0, controlColumns: 6, cssClass: "text-left align-left btnlink .btnlink.btn-default:hover bold")
+                @Data(text: "Recalculate amounts due for a single quarter or multiple quarters.", labelColumns: 0, controlColumns: 6)
+            }
+
+            @using (Panel(panelLayout: PanelLayout.Stacked, borderVisible: false))
+            {
+                @Button(text: "View Employment and Wage Detail History", labelColumns: 0, controlColumns: 6, cssClass: "text-left align-left btnlink .btnlink.btn-default:hover bold")
+                @Data(text: "View previous submissions and adjustments at the SSN level for each individual wage record submitted. Access current calculations and 12th of Month Employment data.", labelColumns: 0, controlColumns: 6)
+            }
+
+            @using (Panel(panelLayout: PanelLayout.Stacked, borderVisible: false))
+            {
+                @Button(text: "Transfer Wage Detail Adjustments", labelColumns: 0, controlColumns: 6, cssClass: "text-left align-left btnlink .btnlink.btn-default:hover bold")
+                @Data(text: "Transfer entire Employment and Wage Detail reports from one Employer account to another. The System will re-calculate Contributions, Interest, and Penalties for both Employer accounts.", labelColumns: 0, controlColumns: 6)
+            }
+
+
+            @using (Panel(panelLayout: PanelLayout.Stacked, borderVisible: false))
+            {
+                @Button(text: "View Employment and Wage Detail Calculation History", labelColumns: 0, controlColumns: 6, cssClass: "text-left align-left btnlink .btnlink.btn-default:hover bold")
+                @Data(text: "Search for and view calculations for quarterly employment and wage submissions.", labelColumns: 0, controlColumns: 6)
+
+            }
+
+           
+        }
+
+    }
+}

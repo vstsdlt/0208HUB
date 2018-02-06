@@ -1,0 +1,11 @@
+<Machine IsPublic="False" IsExternal="False" RequirePersonID="False" RequireAgencyID="False" StartState="EmploymentWageDetailHome">
+  <States>
+    <Page Name="EmploymentWageDetailHome">
+      <Transitions>
+        <State Name="SubmitWage" IsDefault="False" IgnoreData="False" State="SubmitWage" />
+      </Transitions>
+    </Page>
+    <Transfer Name="SubmitWage" Machine="Premium.WageDetail.WageSubmission" OneWay="True" />
+  </States>
+  <Designer>Kj0iSXNSb3VuZGVkQ29ybmVycz1UcnVlCUJyaWRnZVR5cGU9Tm9uZSIARW1wbG95bWVudFdhZ2VEZXRhaWxIb21lPSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249NTYwLDE4MCIARW1wbG95bWVudFdhZ2VEZXRhaWxIb21lLlN1Ym1pdFdhZ2U9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jNglTdGFydFBvaW50PTYyMCwyNjAJRW5kUG9pbnQ9NjIwLDM0MAlUYXJnZXRDb25uZWN0b3I9YzAiAFN1Ym1pdFdhZ2U9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj01NjAsMzQwIg==</Designer>
+</Machine>

@@ -1,0 +1,16 @@
+﻿@using (Form())
+{
+    @using (Panel(headingText: "Determination Information", defaultControlColumns: 8, defaultLabelColumns: 4))
+    {
+        @Data(labelText: "Document Identification Number:", dataSource: "AppealDetails.PremiumAppealDetailDto.CorrespondenceId")
+        @Data(labelText: "Mailing Date of Determination:", dataSource: "AppealDetails.PremiumAppealDetailDto.CreateDateTime", formatter: Formatter.Date)
+        @Data(labelText: "Determination Type:", dataSource: "AppealDetails.PremiumAppealDetailDto.DeterminationCorrespondanceId")
+        <br /><br /><br />
+        <p>Your appeal or request for review has been submitted. Agency staff will review your request and you may be contacted for additional supporting documentation regarding this appeal or request for review. Review What You Need to Know About the Appeal Process for more information.</p>
+        <p>If you have supporting documentation you would like to submit with your appeal click here for a coversheet to include with the documentation.</p>
+    }
+    @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+    {
+        @Button(transition: "Home")
+    }
+}

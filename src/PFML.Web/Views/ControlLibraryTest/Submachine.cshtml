@@ -1,0 +1,15 @@
+﻿@using (TabGroup(headingText: "Submachine tab groups"))
+{
+    @using (Panel(labelText: "Submachine", submachine: "ControlLibraryTest", submachineResetStates: "Menu"))
+    {
+    }
+}
+
+@using (Form())
+{
+    @using (Panel(borderVisible: false))
+    {
+        @Button(transition: "Refresh")
+        @Button(transition: "Close")
+    }
+}

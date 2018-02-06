@@ -1,0 +1,49 @@
+﻿@using FACTS.Framework.Lookup;
+@Html.Partial("WizardHeader", Machine["ListSection"], new ViewDataDictionary(this.ViewData) { { "current", (LookupCode)Machine["CurrentSection"] }, { "showHeader", (bool)Machine["ShowHeader"] } })
+
+@using (Form())
+{
+        @using (Panel(headingText: "Reporting Information", defaultControlColumns: 4, defaultLabelColumns: 4))
+        {
+            @Data(labelText: "Employment and Wages Paid for the Quarter:", dataSource: "WageUnitDetail.ReportingQuarter", lookupName: LookupTable.Quarter, cssClass: "bold")
+            @Data(labelText: "Year:", dataSource: "WageUnitDetail.ReportingYear", cssClass: "bold")
+            @Data(labelText: "Submission Type:", dataSource: "WageUnitDetail.AdjReasonDisplay", formatter: Formatter.Currency, lookupName: LookupTable.WageDetailAdjReasonCode, cssClass: "bold")
+        }
+
+        @using (Panel(panelLayout: PanelLayout.Stacked, headingText: "Employment and Wage Detail Records", defaultControlColumns: 12, defaultLabelColumns: 0, controlColumns: 3, labelColumns: 0))
+        {
+            <ul>
+                <li>Enter employee information in space provided. If you have more than 25 employees and need to enter employee information across MULTIPLE pages, select <b>‘Add’</b>.</li>
+                <li>Click <b>‘Next’</b> after you have entered all of your quarterly employee information.</li>
+             </ul>
+            <hr />
+            <ul>
+                <li>If an adjustment to the Income Tax Amount Withheld of any employee results in an over/underpayment of your company's withholding tax, you must separately amend your withholding tax return(s) with the Taxation & Revenue Department (TRD). </li>
+            </ul>
+        }
+
+        @using (Panel(panelLayout: PanelLayout.Grid, headingText: "Wage Detail Records", defaultControlColumns: 12, defaultLabelColumns: 0))
+        {
+            @using (DataTable(dataSource: "WageUnitDetail.ListWageUnitDetailDto", searchable: false, recordCountInfo: false, allowNewRow: false, showDeleteRow: false, scrolling: true, headerHeight: 38, headerWrap: true))
+            {
+                @DataTableColumn(columnName: "#", dataSource: "SrNo", width: 25)
+                @DataTableColumn(columnName: "SSN", dataSource: "Ssn", dataTableColumnType: DataTableColumnType.TextBox, width: 50, formatter: Formatter.Ssn)
+                @DataTableColumn(columnName: "Last Name", dataSource: "LastName", dataTableColumnType: DataTableColumnType.TextBox, width: 120, formatter: Formatter.TextAlpha)
+                @DataTableColumn(columnName: "First Name", dataSource: "FirstName", dataTableColumnType: DataTableColumnType.TextBox, width: 120, formatter: Formatter.TextAlpha)
+                @DataTableColumn(columnName: "Occupation", dataSource: "Occupation", dataTableColumnType: DataTableColumnType.TextBox, formatter: Formatter.TextAlpha, looseValidation: true, width: 120)
+                @DataTableColumn(columnName: "Hours Worked", dataSource: "HoursWorked", formatter: Formatter.Number, formatDecimals: 2, dataTableColumnType: DataTableColumnType.TextBox, width: 50)
+                @DataTableColumn(columnName: "Gross Wages", dataSource: "WageAmount", formatter: Formatter.Currency, dataTableColumnType: DataTableColumnType.TextBox, width: 50)
+            }
+        }
+        @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+        {
+            @Button(transition: "Previous")
+            @Button(transition: "Next")
+            @Button(transition: "Add")
+        }
+
+        @using (Panel(borderVisible: false, panelLayout: PanelLayout.Grid, defaultControlColumns: 4, defaultLabelColumns: 4))
+        {
+            @RadioButtonGroup(labelText: "Does your company hire contractors", lookupName: LookupTable.BoolYesNo, lookupSort: "{DisplaySortOrder}", dataSource: "IsContractor", required: "true")
+        }
+}

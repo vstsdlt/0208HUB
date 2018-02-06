@@ -1,0 +1,40 @@
+﻿@using (Form())
+{
+
+    @using (Panel(headingText: "SelectBox Filtering", defaultLabelColumns: 0, defaultControlColumns: 6))
+    {
+        @SelectBox(dataSource: "ControlFilteringSelectBox", lookupName: LookupTable.State);
+        @using (DataTable(dataSource: "DataTableSourceChild1", dataTableHeight: DataTableHeight.Short, horizontalScrolling: false, scrolling: false, defaultColumnWidth: 10, canExport: true, filter: @"State % '^{ControlFilteringSelectBox}\s-'"))
+        {
+            @DataTableColumn(transition: "Refresh", targetDataSource: "DataTableRecord12")
+            @DataTableColumn(transition: "Refresh", columnName: "One", dataSource: "Field1", formatter: Formatter.Date)
+            @DataTableColumn(columnName: "Two", dataSource: "Field2", formatter: Formatter.Currency, showTotal: true)
+            @DataTableColumn(columnName: "Three", dataSource: "Field3")
+            @DataTableColumn(dataSource: "State", lookupName: LookupTable.State, lookupFormat: "{Code} - {Display}", width: 60)
+        }
+    } 
+
+    @using (Panel(headingText: "DataTable Filtering", defaultLabelColumns: 0, defaultControlColumns: 6))
+    {
+        @using (DataTable(dataSource: "DataTableSourceParent2", dataTableHeight: DataTableHeight.Short, horizontalScrolling: false, scrolling: false, defaultColumnWidth: 10, canExport: true))
+        {
+            @DataTableColumn(transition: "Refresh", targetDataSource: "DataTableRecord21")
+            @DataTableColumn(transition: "Refresh", columnName: "One", dataSource: "Field1", formatter: Formatter.Date)
+            @DataTableColumn(columnName: "Two", dataSource: "Field2", formatter: Formatter.Currency, showTotal: true)
+            @DataTableColumn(columnName: "Three", dataSource: "Field3")
+            @DataTableColumn(dataSource: "State", lookupName: LookupTable.State, lookupFormat: "{Code} - {Display}", width: 60)
+        }
+        @using (DataTable(dataSource: "DataTableSourceChild2", dataTableHeight: DataTableHeight.Short, horizontalScrolling: false, scrolling: false, defaultColumnWidth: 10, canExport: true, filter: @"State = DataTableSourceParent2[].State", searchable: false))
+        {
+            @DataTableColumn(transition: "Refresh", targetDataSource: "DataTableRecord22")
+            @DataTableColumn(transition: "Refresh", columnName: "One", dataSource: "Field1", formatter: Formatter.Date)
+            @DataTableColumn(columnName: "Two", dataSource: "Field2", formatter: Formatter.Currency, showTotal: true)
+            @DataTableColumn(columnName: "Three", dataSource: "Field3")
+            @DataTableColumn(dataSource: "State", lookupName: LookupTable.State, lookupFormat: "{Code} - {Display}", width: 60)
+        }
+    }
+
+    <br />
+    @Button(transition: "Refresh")
+    @Button(transition: "Close")
+}

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FACTS.Framework.Analysis" Version="2.0.6609.19833" />
+    <PackageReference Include="FACTS.Framework.Common" Version="2.0.6609.19833" />
+    <PackageReference Include="FACTS.Framework.Logic" Version="2.0.6609.19833" />
+    <PackageReference Include="FACTS.Framework.Service" Version="2.0.6609.19833" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PFML.BusinessLogic\PFML.BusinessLogic.csproj" />
+    <ProjectReference Include="..\PFML.DAL\PFML.DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\Premium\Registration\EmployerRegistration\" />
+  </ItemGroup>
+
+</Project>

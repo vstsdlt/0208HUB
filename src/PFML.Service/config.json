@@ -1,0 +1,22 @@
+{
+    "service": {
+        "scratchPath": "c:\\FACTS Scratch"
+    },
+    "logging": {
+        "LogLevel": "Trace",
+        "LogLevelSystem": "Error",
+        "idPrefix": "DS01",
+        "sizeCap": 0,
+        "filespec": "c:\\FACTS Logs\\{year}{month}{day}-{idPrefix}.dlf"
+    },
+    "dal": {
+        "dbProvider": "SqlServer",
+        "connections": {
+          "PFML.DAL.Model.DbContext": {
+            "connectionString": "Data Source=localhost;Initial Catalog=WAPFML;Integrated Security=True"
+          }
+        }
+    },
+    "application": {
+    }
+}

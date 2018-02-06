@@ -1,0 +1,98 @@
+<Machine IsPublic="False" IsExternal="False" RequirePersonID="False" RequireAgencyID="False" StartState="FetchSummary">
+  <States>
+    <Operation Name="FetchSummary" Service="Premium.Waiver.VPRequest" Operation="FetchSummary" ResultProperty="Forms">
+      <Parameters>
+        <Parameter DataSource="EmployerId" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="Default" />
+      </Transitions>
+    </Operation>
+    <Page Name="Default">
+      <Transitions>
+        <State Name="View" IsDefault="False" IgnoreData="False" State="Fetch" />
+        <State Name="New" IsDefault="False" IgnoreData="False" State="Preset" />
+      </Transitions>
+    </Page>
+    <Page Name="View">
+      <Transitions>
+        <End Name="Close" IsDefault="False" IgnoreData="True" />
+        <State Name="Edit" IsDefault="False" IgnoreData="False" State="Preset" />
+      </Transitions>
+    </Page>
+    <Page Name="Edit">
+      <Transitions>
+        <State Name="Upload" IsDefault="False" IgnoreData="False" State="Upload" />
+        <State Name="Submit" IsDefault="False" IgnoreData="False" State="Submit" />
+        <State Name="Cancel" IsDefault="False" IgnoreData="False" State="Cancel" />
+        <State Name="Delete" IsDefault="False" IgnoreData="False" State="Delete" />
+      </Transitions>
+    </Page>
+    <Page Name="Cancel">
+      <Transitions>
+        <Previous Name="No" IsDefault="False" IgnoreData="False" Type="PageOnly" Count="1" />
+        <Previous Name="Yes" IsDefault="False" IgnoreData="False">
+          <StopStates>
+            <StopState State="Default" />
+            <StopState State="View" />
+          </StopStates>
+        </Previous>
+      </Transitions>
+    </Page>
+    <Operation Name="Submit" Service="Premium.Waiver.VPRequest" Operation="Submit">
+      <Parameters>
+        <Parameter DataSource="Form" />
+        <Parameter DataSource="LeaveTypes" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="IsEdit" />
+      </Transitions>
+    </Operation>
+    <Page Name="Upload">
+      <Transitions>
+        <Previous Name="Close" IsDefault="False" IgnoreData="True" Type="PageOnly" Count="1" />
+        <State Name="Next" IsDefault="False" IgnoreData="False" State="Edit" />
+      </Transitions>
+    </Page>
+    <Operation Name="Preset" Service="Premium.Waiver.VPRequest" Operation="Preset" ResultProperty="Form">
+      <Parameters>
+        <Parameter DataSource="Form" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="Edit" />
+      </Transitions>
+    </Operation>
+    <Operation Name="Fetch" Service="Premium.Waiver.VPRequest" Operation="Fetch" ResultProperty="Form">
+      <Parameters>
+        <Parameter DataSource="Form" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="View" />
+      </Transitions>
+    </Operation>
+    <Decision Name="IsEdit" DataSource="IsEdit">
+      <Transitions>
+        <State Name="View" IsDefault="False" State="Fetch">
+          <DecisionValues>
+            <DecisionValue Value="True" />
+          </DecisionValues>
+        </State>
+        <State Name="Next" IsDefault="False" State="FetchSummary">
+          <DecisionValues>
+            <DecisionValue Value="False" />
+          </DecisionValues>
+        </State>
+      </Transitions>
+    </Decision>
+    <Operation Name="Delete" Service="Premium.Waiver.VPRequest" Operation="Delete" ResultProperty="Form">
+      <Parameters>
+        <Parameter DataSource="Form" />
+        <Parameter DataSource="FormAttachment" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="Preset" />
+      </Transitions>
+    </Operation>
+  </States>
+  <Designer>Kj0iSXNSb3VuZGVkQ29ybmVycz1UcnVlCUJyaWRnZVR5cGU9Qm93IgBGZXRjaFN1bW1hcnk9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj02MCw4MCIARmV0Y2hTdW1tYXJ5Lk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jMTcJU3RhcnRQb2ludD0xODAsMTIwCUVuZFBvaW50PTI4MCwxMjAJVGFyZ2V0Q29ubmVjdG9yPWMxMiIARGVmYXVsdD0iQ29sb3I9I0ZGMDA3MkM2CVBvc2l0aW9uPTI4MCw4MCIARGVmYXVsdC5WaWV3PSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzE1CVN0YXJ0UG9pbnQ9NDAwLDEyMAlFbmRQb2ludD01MjAsMTIwCVRhcmdldENvbm5lY3Rvcj1jMTQiAERlZmF1bHQuTmV3PSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzcJU3RhcnRQb2ludD0zMTkuOTk5NiwxNjAJRW5kUG9pbnQ9MzE5Ljk5OTYsMjQwCVRhcmdldENvbm5lY3Rvcj1jMSIAVmlldz0iQ29sb3I9I0ZGMDA3MkM2CVBvc2l0aW9uPTc2MCw4MCIAVmlldy5DbG9zZT0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxNwlTdGFydFBvaW50PTg4MCwxNDAJRW5kUG9pbnQ9OTk4LDE0Mi42NjY2NjY2NjY2NjciAFZpZXcuRWRpdD0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWM4CVN0YXJ0UG9pbnQ9ODQwLjAwMDQsMTYwCUVuZFBvaW50PTM2MC4wMDA0LDI0MAlNaWRQb2ludHM9ODQwLDE4MCA3MjAsMTgwIDU4MCwxODAgMzYwLDE4MAlUYXJnZXRDb25uZWN0b3I9YzIiAEVkaXQ9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj01MjAsMjQwIgBFZGl0LlVwbG9hZD0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxNglTdGFydFBvaW50PTY0MCwyNjAJRW5kUG9pbnQ9NzcyLDI2MAlUYXJnZXRDb25uZWN0b3I9YzEzIgBFZGl0LlN1Ym1pdD0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWM5CVN0YXJ0UG9pbnQ9NTQwLjAwMDQsMzEyCUVuZFBvaW50PTM0MCwzODAJTWlkUG9pbnRzPTU0MCwzNjAgMzQwLDM2MAlUYXJnZXRDb25uZWN0b3I9YzAiAEVkaXQuQ2FuY2VsPSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzEwCVN0YXJ0UG9pbnQ9NjE5Ljk5OTYsMzIwCUVuZFBvaW50PTc2MCw0MjAJTWlkUG9pbnRzPTYyMCwzNjAgNzAwLDM2MCA3MDAsNDIwCVRhcmdldENvbm5lY3Rvcj1jMTIiAEVkaXQuRGVsZXRlPSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzYJU3RhcnRQb2ludD01ODAsMzIwCUVuZFBvaW50PTU4MCwzODAJVGFyZ2V0Q29ubmVjdG9yPUF1dG8iAENhbmNlbD0iQ29sb3I9I0ZGMDA3MkM2CVBvc2l0aW9uPTc2MCwzODAiAENhbmNlbC5Obz0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxNwlTdGFydFBvaW50PTg4MCw0NDAJRW5kUG9pbnQ9MTAwMCw0NDAiAENhbmNlbC5ZZXM9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jMTYJU3RhcnRQb2ludD04ODAsNDAwCUVuZFBvaW50PTk5Ny42NjY2NjY2NjY2NjcsMzk4LjMzMzMzMzMzMzMzMyIAU3VibWl0PSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249MjgwLDM4MCIAU3VibWl0Lk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jMTQJU3RhcnRQb2ludD0yODAsNDIwCUVuZFBvaW50PTE4MCw0MjAJVGFyZ2V0Q29ubmVjdG9yPWMxMyIAVXBsb2FkPSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249NzYwLDI0MCIAVXBsb2FkLkNsb3NlPSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzE1CVN0YXJ0UG9pbnQ9ODgwLDI4MAlFbmRQb2ludD0xMDAwLjMzMzMzMzMzMzMzLDI3NS42NjY2NjY2NjY2NjciAFVwbG9hZC5OZXh0PSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzE0CVN0YXJ0UG9pbnQ9NzcyLDMwMAlFbmRQb2ludD02NDAsMzAwCVRhcmdldENvbm5lY3Rvcj1jMTciAFByZXNldD0iQ29sb3I9I0ZGMDA3MkM2CVBvc2l0aW9uPTI4MCwyNDAiAFByZXNldC5OZXh0PSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzE3CVN0YXJ0UG9pbnQ9NDAwLDI4MAlFbmRQb2ludD01MjAsMjgwCVRhcmdldENvbm5lY3Rvcj1jMTIiAEZldGNoPSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249NTIwLDgwIgBGZXRjaC5OZXh0PSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzE3CVN0YXJ0UG9pbnQ9NjQwLDEyMAlFbmRQb2ludD03NjAsMTIwCVRhcmdldENvbm5lY3Rvcj1jMTIiAElzRWRpdD0iQ29sb3I9I0ZGMDA3MkM2CVBvc2l0aW9uPTYwLDM4MCIASXNFZGl0LlZpZXc9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jNQlTdGFydFBvaW50PTEyMCw0NjAJRW5kUG9pbnQ9NTgwLDgwCU1pZFBvaW50cz0xMjAsNDgwIDMyMCw0ODAgNDIwLDQ4MCA0MjAsNjAgNTgwLDYwCVRhcmdldENvbm5lY3Rvcj1jMCIASXNFZGl0Lk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jMAlTdGFydFBvaW50PTAsMAlFbmRQb2ludD0xMjAsMTYwCVRhcmdldENvbm5lY3Rvcj1jNyIARGVsZXRlPSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249NTIwLDM4MCIARGVsZXRlLk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jMTQJU3RhcnRQb2ludD01MjAsNDIwCUVuZFBvaW50PTI4MCwyODAJTWlkUG9pbnRzPTQ2MCw0MjAgNDYwLDUwMCAyMDAsNTAwIDIwMCwyODAJVGFyZ2V0Q29ubmVjdG9yPWMxNCI=</Designer>
+</Machine>

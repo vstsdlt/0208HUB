@@ -1,0 +1,17 @@
+﻿@Html.Partial("EmployerHeaderWizard", Machine["ListSection"], new ViewDataDictionary(ViewData) { { "current", (LookupCode)Machine["CurrentSection"] }, { "showHeader", (bool)Machine["ShowHeader"] } })
+
+@using (Form())
+{
+    @using (Panel(defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        @Data(labelText: "<div><p><b style='color:red'>Warning: You are making a partial payment. Failure to pay the total amount due by the due date will result in " +
+            "interest and/or penalties being charged  to your account. Past due debt may be referred to collections and enforcement penalties may result.</b></p></div>", labelColumns: 11, controlColumns: 1)
+        @Data(labelText: "Select 'Previous' to re-enter the payment amount or 'Next' to continue to the payment submission screen", labelColumns: 11, controlColumns: 1)
+        @using (Panel(stateFilter: "PartialPayment", borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+        {
+            <br />
+            @Button(transition: "Previous", text: "Previous")
+            @Button(transition: "Next", text: "Next")
+        }
+    }
+}

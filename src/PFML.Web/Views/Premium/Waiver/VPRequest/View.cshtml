@@ -1,0 +1,40 @@
+﻿@using (Form())
+{
+	@using (Panel(headingText: "Voluntary Plan Waiver", defaultLabelColumns: 0, defaultControlColumns: 12))
+	{
+		@using (Panel(panelLayout: PanelLayout.Inline, borderVisible: false))
+		{
+			<h6>Voluntary Plan Details</h6>
+			<span>
+				Dates the Voluntary Plan is available to employees in 2018 From @Data(dataSource: "Form.StartDate", formatter: Formatter.Date) to @Data(dataSource: "Form.EndDate", formatter: Formatter.Date)
+			</span>
+			<h6>
+				Leave Types
+			</h6>
+			@using (Panel(borderVisible: false))
+			{
+				@using (DataTable(dataSource: "Form.VoluntaryPlanWaiverRequestTypes", searchable: false, dataTableHeight: DataTableHeight.Full, recordCountInfo: false))
+				{
+					@DataTableColumn(columnName: "Types of Leave available", dataSource: "LeaveTypeCode", lookupName: LookupTable.WaiverLeaveType)
+					@DataTableColumn(columnName: "Weeks available annually", dataSource: "DurationInWeeksCode", lookupName: LookupTable.WaiverWeeksAvailable)
+					@DataTableColumn(columnName: "Percentage of wages paid", dataSource: "PercentagePaid", formatter: Formatter.Percent, formatDecimals: 2, columnAlign: ColumnAlign.Center, width: 40)
+				}
+			}
+			<h6>
+				Supporting Documents
+			</h6>
+			@using (Panel(borderVisible: false))
+			{
+				@using (DataTable(dataSource: "Form.FormAttachments", searchable: false, dataTableHeight: DataTableHeight.Full, recordCountInfo: false))
+				{
+					@DataTableColumn(columnName: "Document Name", dataSource: "Document.DocumentName")
+					@DataTableColumn(columnName: "Document Description", dataSource: "Document.DocumentDescription")
+					@DataTableColumn(columnName: "View", text: "<a href='https://www.google.com/' target='_blank'>View</a>")
+				}
+			}
+			<br />
+			@Button(transition: "Close")
+			@Button(transition: "Edit", targetDataSource: "Form")
+		}
+	}
+}

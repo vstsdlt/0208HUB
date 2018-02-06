@@ -1,0 +1,128 @@
+﻿@using (Form())
+{
+@*
+    @using (Panel(headingText: "Record", defaultLabelColumns: 0, defaultControlColumns: 3))
+    {
+        @Data(dataSource: "DataTableRecord?.Field1")
+        @Data(dataSource: "DataTableRecord?.Field2")
+        @Data(dataSource: "DataTableRecord?.Field3")
+        @Data(dataSource: "DataTableRecord?.State", lookupName: LookupTable.State, lookupFormat: "{Code} - {Display}")
+    }
+
+    @using (Panel(headingText: "Method Record", defaultLabelColumns: 0, defaultControlColumns: 3))
+    {
+        @Data(dataSource: "DataTableMethodRecord?.PersonID")
+        @Data(dataSource: "DataTableMethodRecord?.FirstName")
+        @Data(dataSource: "DataTableMethodRecord?.LastName")
+    }
+
+    @using (Panel(headingText: "short | 100% | scrolling | dataMethod"))
+    {
+        @using (DataTable(dataMethod: "DataTableDataMethod", labelColumns: 0, controlColumns: 12, dataTableHeight: DataTableHeight.Short, horizontalScrolling: false, scrolling: true, defaultColumnWidth: 10, canExport: true))
+        {
+            @DataTableColumn(transition: "Select", targetDataSource: "DataTableMethodRecord")
+            @DataTableColumn(columnName: "ID", dataSource: "PersonID")
+            @DataTableColumn(columnName: "First", dataSource: "FirstName", groupIndex: 0)
+            @DataTableColumn(columnName: "Last", dataSource: "LastName")
+        }
+    }
+*@
+    @using (Panel(headingText: "short | 100% | scrolling", isCollapsible: true))
+    {
+        @using (DataTable(dataSource: "DataTableSource", labelColumns: 0, controlColumns: 12, dataTableHeight: DataTableHeight.Short, horizontalScrolling: false, scrolling: true, defaultColumnWidth: 10, canExport: true, dataSourceRendering: DataSourceRendering.Client, allowNewRow: false, showDeleteRow: true))//, selectedRowsDataSource: "SelectedRows"))
+        {
+            //@DataTableColumn(transition: "Select", targetDataSource: "DataTableRecord")
+            @DataTableColumn(transition: "Select", columnName: "One", dataSource: "Field1", formatter: Formatter.Date, formatStyle: "MM-dd-yyyy")
+            @DataTableColumn(columnName: "Two", dataSource: "Field2", formatter: Formatter.Currency, dataTableColumnType: DataTableColumnType.TextBox, showTotal: true)//, totalFilter: "State < 'M'")
+            @DataTableColumn(columnName: "Three", dataSource: "Field3", dataTableColumnType: DataTableColumnType.CheckBox)
+            @DataTableColumn(columnName: "State1", dataSource: "State", lookupName: LookupTable.State, lookupFormat: "{Code}")
+            @DataTableColumn(columnName: "State2", dataSource: "State", lookupName: LookupTable.State, lookupFormat: "{Display}")
+            @DataTableColumn(dataSource: "IDInt", columnName: "ID Int",formatter:Formatter.Number)
+            @DataTableColumn(dataSource: "IDString", columnName: "ID Int")
+        }
+    }
+@*
+    @using (Panel(headingText: "short | 100% | paging", isCollapsible: true))
+    {
+        @using (DataTable(dataSource: "DataTableSource", labelColumns: 0, controlColumns: 12, dataTableHeight: DataTableHeight.Short, horizontalScrolling: false, scrolling: false, pageSize: 7, pageSizes: new[] { 11, 26, 51, 101 }, defaultColumnWidth: 10, canExport: true))
+        {
+            @DataTableColumn(transition: "Select", targetDataSource: "DataTableRecord")
+            @DataTableColumn(columnName: "One", dataSource: "Field1")
+            @DataTableColumn(columnName: "Two", dataSource: "Field2", formatter: Formatter.Currency, showTotal: true)
+            @DataTableColumn(columnName: "Three", dataSource: "Field3")
+            @DataTableColumn(dataSource: "State", lookupName: LookupTable.State, lookupFormat: "{Code} - {Display}", groupIndex: 0)
+            @DataTableColumn(dataSource: "Child.Field1", columnName: "Child Field1")
+        }
+    }
+
+    @using (Panel(headingText: "short | h-scrolling | scrolling", isCollapsible: true))
+    {
+        @using (DataTable(dataSource: "DataTableSource", labelColumns: 0, controlColumns: 12, dataTableHeight: DataTableHeight.Short, horizontalScrolling: true, scrolling: true, defaultColumnWidth: 150, canExport: true))
+        {
+            @DataTableColumn(transition: "Select", targetDataSource: "DataTableRecord", width: 100)
+            @DataTableColumn(columnName: "One", dataSource: "Field1", width: 125)
+            @DataTableColumn(columnName: "Two", dataSource: "Field2", formatter: Formatter.Currency, width: 150)
+            @DataTableColumn(columnName: "Three", dataSource: "Field3", width: 175)
+            @DataTableColumn(dataSource: "State", lookupName: LookupTable.State, lookupFormat: "{Code} - {Display}", width: 200)
+            @DataTableColumn(dataSource: "Child.Field1", columnName: "Child Field1", width: 225)
+        }
+    }
+
+    @using (Panel(headingText: "short | h-scrolling | paging", isCollapsible: true))
+    {
+        @using (DataTable(dataSource: "DataTableSource", labelColumns: 0, controlColumns: 12, dataTableHeight: DataTableHeight.Short, horizontalScrolling: true, scrolling: false, defaultColumnWidth: 750, canExport: true))
+        {
+            @DataTableColumn(transition: "Select", targetDataSource: "DataTableRecord")
+            @DataTableColumn(columnName: "One", dataSource: "Field1")
+            @DataTableColumn(columnName: "Two", dataSource: "Field2", formatter: Formatter.Currency)
+            @DataTableColumn(columnName: "Three", dataSource: "Field3")
+            @DataTableColumn(dataSource: "State", lookupName: LookupTable.State, lookupFormat: "{Code} - {Display}")
+            @DataTableColumn(dataSource: "Child.Field1", columnName: "Child Field1")
+        }
+    }
+
+    @using (Panel(headingText: "full | 100% | scrolling", isCollapsible: true))
+    {
+        @using (DataTable(dataSource: "DataTableSource", labelColumns: 0, controlColumns: 12, dataTableHeight: DataTableHeight.Full, horizontalScrolling: false, scrolling: true, defaultColumnWidth: 10, canExport: true))
+        {
+            @DataTableColumn(transition: "Select", targetDataSource: "DataTableRecord")
+            @DataTableColumn(columnName: "One", dataSource: "Field1")
+            @DataTableColumn(columnName: "Two", dataSource: "Field2", formatter: Formatter.Currency)
+            @DataTableColumn(columnName: "Three", dataSource: "Field3")
+            @DataTableColumn(dataSource: "State", lookupName: LookupTable.State, lookupFormat: "{Code} - {Display}")
+            @DataTableColumn(dataSource: "Child.Field1", columnName: "Child Field1")
+        }
+    }
+
+    @using (Panel(headingText: "full | h-scrolling | scrolling", isCollapsible: true))
+    {
+        @using (DataTable(dataSource: "DataTableSource", labelColumns: 0, controlColumns: 12, dataTableHeight: DataTableHeight.Full, horizontalScrolling: true, scrolling: true, defaultColumnWidth: 750, canExport: true))
+        {
+            @DataTableColumn(transition: "Select", targetDataSource: "DataTableRecord")
+            @DataTableColumn(columnName: "One", dataSource: "Field1")
+            @DataTableColumn(columnName: "Two", dataSource: "Field2", formatter: Formatter.Currency)
+            @DataTableColumn(columnName: "Three", dataSource: "Field3")
+            @DataTableColumn(dataSource: "State", lookupName: LookupTable.State, lookupFormat: "{Code} - {Display}")
+            @DataTableColumn(dataSource: "Child.Field1", columnName: "Child Field1")
+        }
+    }
+*@
+
+    @Button(transition: "AllRecords")
+    @Button(transition: "OneRecord")
+    @Button(transition: "NoRecords")
+    <br />
+    @Button(transition: "Modal")
+    @Button(transition: "Refresh")
+    @Button(transition: "Close")
+}
+
+@section script {
+    <script>
+        $(function () {
+            $("#b_f").on('order.dt', function (e) {
+                e.preventDefault();
+            });
+        });
+    </script>
+}

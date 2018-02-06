@@ -1,0 +1,125 @@
+﻿@Html.Partial("WizardHeader", Machine["ListSection"], new ViewDataDictionary(this.ViewData) { { "current", Machine["CurrentSection"] }, { "showHeader", Machine["ShowHeader"] } })
+
+@using (Form())
+{
+    @using (Panel(headingText: "Registration Summary/Edit", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        <p><b>Your registration is almost complete!</b></p>
+        <p><b>Print this page and keep a copy for your records.</b> Scroll down to review and 'Submit' the registration information.To correct information in a section click 'Previous'.</p>
+    }
+
+    @using (Panel(headingText: "Confirm Registration Information", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        @Data(labelText: "Is the employer registering currently paying wages for services performed?", dataSource: "EmployerRegistration.EmployerDto.IsServiceBegin", cssClass: "bold", lookupName: LookupTable.BoolConversion)
+        @Data(labelText: "If yes, how many individuals are being paid for services performed in State?", dataSource: "EmployerRegistration.EmployerDto.NoOfEmployeesPaid", formatter: Formatter.Number, cssClass: "bold", lookupName: LookupTable.BoolConversion)
+        @Data(labelText: "If yes, enter the date services were first performed for the employer in State?", formatter: Formatter.Date, dataSource: "EmployerRegistration.EmployerDto.ServiceBeginDate", cssClass: "bold")
+        @Data(labelText: "If yes, enter the date this employer first paid wages to those individuals performing services in State?", formatter: Formatter.Date, dataSource: "EmployerRegistration.EmployerUnitDto.FirstWageDate", cssClass: "bold")
+        @Data(labelText: "Enter this employer’s Federal Employer Identification Number(FEIN):", dataSource: "EmployerRegistration.EmployerDto.Fein", formatter: Formatter.TextNumeric, cssClass: "bold")
+    }
+
+    @using (Panel(headingText: "Employment Liability- Wages Paid", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        @Data(labelText: "During the current calendar year or the preceding four calendar years, was there any calendar quarter in which this employer paid wages of at least $450 for covered service in non-agricultural (regular) employment?", dataSource: "EmployerRegistration.EmployerDto.EmployerLiability.HasPaid450RegularWages", cssClass: "bold", lookupName: LookupTable.BoolConversion)
+        @Data(labelText: "During the current calendar year or the preceding four calendar years, was there any calendar quarter in which this employer paid wages of $20,000 or more for agricultural labor?", dataSource: "EmployerRegistration.EmployerDto.EmployerLiability.HasPaid20KAgriculturalLaborWages", cssClass: "bold", lookupName: LookupTable.BoolConversion)
+        @Data(labelText: "During the current calendar year or the preceding four calendar years, was there any calendar quarter in which this employer paid wages of $1,000 or more for domestic service in a private home, local college club or local chapter of a college fraternity or sorority?", dataSource: "EmployerRegistration.EmployerDto.EmployerLiability.HasPaid1KDomesticWages", cssClass: "bold", lookupName: LookupTable.BoolConversion)
+        @Data(labelText: "If yes to any of the above, select the quarter and year during which this amount was first met:", dataSource: "EmployerRegistration.EmployerDto.EmployerLiability.LiabilityAmountMetYear", securityFilter: "EmployerRegistration.EmployerDto.EmployerLiability.HasPaid450RegularWages=='Y' || EmployerRegistration.EmployerDto.EmployerLiability.HasPaid20KAgriculturalLaborWages=='Y' || EmployerRegistration.EmployerDto.EmployerLiability.HasPaid1KDomesticWages=='Y'", labelColumns: 4, controlColumns: 2, cssClass: "bold")
+        @Data(labelText: "", dataSource: "EmployerRegistration.EmployerDto.EmployerLiability.LiabilityAmountMetQuarter", securityFilter: "EmployerRegistration.EmployerDto.EmployerLiability.HasPaid450RegularWages=='Y' || EmployerRegistration.EmployerDto.EmployerLiability.HasPaid20KAgriculturalLaborWages=='Y' || EmployerRegistration.EmployerDto.EmployerLiability.HasPaid1KDomesticWages=='Y'", lookupName: LookupTable.Quarter, labelColumns: 0, controlColumns: 2, cssClass: "bold")
+        @Data(labelText: "If yes to any of the above, provide the total gross wages (paid to date) within the selected quarter:", formatter: Formatter.Currency, dataSource: "EmployerRegistration.EmployerDto.EmployerLiability.GrossWagesPaid", securityFilter: "EmployerRegistration.EmployerDto.EmployerLiability.HasPaid450RegularWages=='Y' || EmployerRegistration.EmployerDto.EmployerLiability.HasPaid20KAgriculturalLaborWages=='Y' || EmployerRegistration.EmployerDto.EmployerLiability.HasPaid1KDomesticWages=='Y'", cssClass: "bold")
+    }
+
+    @using (Panel(headingText: "Employment Liability – Weeks Worked", defaultControlColumns: 4, defaultLabelColumns: 4, securityFilter: "IsLiableWages='No'"))
+    {
+        @Data(labelText: "During the current calendar year or the preceding four calendar years did this employer employ one or more persons in each of 20 separate weeks for covered services in non agricultural (regular) employment?", dataSource: "EmployerRegistration.EmployerDto.EmployerLiability.HasEmployed1In20Weeks", cssClass: "bold", lookupName: LookupTable.BoolConversion)
+        @Data(labelText: "During the current calendar year or the preceding four calendar years did this employer have ten (10) or more employees in each of 20 separate weeks in agricultural employment?", dataSource: "EmployerRegistration.EmployerDto.EmployerLiability.HasEmployed10In20Weeks", cssClass: "bold", lookupName: LookupTable.BoolConversion)
+        @Data(labelText: "If yes to any of the above, select the quarter and year during which the 20th week was met:", dataSource: "EmployerRegistration.EmployerDto.EmployerLiability.LiabilityAmountMetYear", securityFilter: "EmployerRegistration.EmployerDto.EmployerLiability.HasEmployed1In20Weeks=='Y' || EmployerRegistration.EmployerDto.EmployerLiability.HasEmployed10In20Weeks=='Y'", labelColumns: 4, controlColumns: 2, cssClass: "bold")
+        @Data(labelText: "", dataSource: "EmployerRegistration.EmployerDto.EmployerLiability.LiabilityAmountMetQuarter", securityFilter: "EmployerRegistration.EmployerDto.EmployerLiability.HasEmployed1In20Weeks=='Y' || EmployerRegistration.EmployerDto.EmployerLiability.HasEmployed10In20Weeks=='Y'", lookupName: LookupTable.Quarter, labelColumns: 0, controlColumns: 2, cssClass: "bold")
+    }
+
+    @using (Panel(headingText: "Administrator Information", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        @Data(labelText: "First Name:", dataSource: "EmployerRegistration.EmployerContactDto.FirstName", cssClass: "bold")
+        @Data(labelText: "Last Name:", dataSource: "EmployerRegistration.EmployerContactDto.LastName", cssClass: "bold")
+        @Data(labelText: "Business Phone:", dataSource: "EmployerRegistration.EmployerContactDto.PhoneNumber", formatter: Formatter.Phone, cssClass: "bold")
+        @Data(labelText: "Secondary Phone:", dataSource: "EmployerRegistration.EmployerContactDto.SecondaryPhoneNumber", formatter: Formatter.Phone, cssClass: "bold")
+        @Data(labelText: "Administrator Title:", dataSource: "EmployerRegistration.EmployerContactDto.Title", cssClass: "bold")
+        @Data(labelText: "Username:", dataSource: "EmployerRegistration.EmployerDto.UserName", cssClass: "bold")
+        @Data(labelText: "E-Mail:", dataSource: "EmployerRegistration.EmployerContactDto.Email", cssClass: "bold")
+    }
+
+    @using (Panel(headingText: "Employer Identification Information", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        @Data(labelText: "Legal Entity Type:", dataSource: "EmployerRegistration.EmployerDto.EntityTypeCode", lookupName: LookupTable.LegalEntity, cssClass: "bold")
+        @Data(labelText: "Legal Name:", dataSource: "EmployerRegistration.EmployerDto.EntityName", cssClass: "bold")
+        @Data(labelText: "Trade Name/Doing Business As (DBA) Name:", dataSource: "EmployerRegistration.EmployerUnitDto.DoingBusinessAsName", cssClass: "bold")
+        @Data(labelText: "Mailing Address Line 1:", dataSource: "EntityAddress.Address.AddressLine1", cssClass: "bold")
+        @Data(labelText: "Mailing Address Line 2:", dataSource: "EntityAddress.Address.AddressLine2", cssClass: "bold")
+        @Data(labelText: "City:", dataSource: "EntityAddress.Address.City", cssClass: "bold")
+        @Data(labelText: "State", dataSource: "EntityAddress.Address.StateCode", lookupName: LookupTable.StatePrvnc, lookupFormat: "{Code} - {Display}", cssClass: "bold")
+        @Data(labelText: "ZIP/Postal Code:", dataSource: "EntityAddress.Address.Zip", cssClass: "bold")
+        @Data(labelText: "Country:", dataSource: "EntityAddress.Address.CountryCode", lookupName: LookupTable.Country, lookupFormat: "{Code} - {Display}", cssClass: "bold")
+        @Data(labelText: "Business Phone Number:", dataSource: "EntityAddress.Address.PhoneNumber", formatter: Formatter.Phone, cssClass: "bold")
+        @Data(labelText: "Business Fax Number:", dataSource: "EntityAddress.Address.FaxNumber", cssClass: "bold")
+        @Data(labelText: "Business E-Mail Address:", dataSource: "EntityAddress.Address.Email", cssClass: "bold")
+        @Data(labelText: "Communication Method:", dataSource: "EmployerRegistration.EmployerDto.EmployerPreference.CorrespondanceTypeCode", lookupName: LookupTable.CommunicationMethod, cssClass: "bold")
+    }
+
+    @using (Panel(headingText: "Business Information", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        @Data(labelText: "Legal Entity Type:", dataSource: "EmployerRegistration.EmployerDto.EntityTypeCode", lookupName: LookupTable.LegalEntity, cssClass: "bold")
+        @Data(labelText: "Business Type:", dataSource: "EmployerRegistration.EmployerDto.EntityName", stateFilter: "IsPublicEntity", lookupName: LookupTable.BusinessType, cssClass: "bold")
+        @Data(labelText: "FEIN:", dataSource: "EmployerRegistration.EmployerDto.Fein", cssClass: "bold")
+        @Data(labelText: "Will this employer act as a Professional Employer Organization(PEO)?", dataSource: "EmployerRegistration.EmployerDto.IsProfessionalEmployerOrg", cssClass: "bold", lookupName: LookupTable.BoolConversion)
+        @Data(labelText: "Is this employer the client of a PEO?", dataSource: "EmployerRegistration.EmployerDto.IsClientOfPEO", cssClass: "bold", lookupName: LookupTable.BoolConversion)
+        @Data(labelText: "Does this employer have workers considered to be independent contractors?", dataSource: "EmployerRegistration.EmployerDto.IsIndividualContractor", cssClass: "bold", lookupName: LookupTable.BoolConversion)
+        @Data(labelText: "Is this employer a non-profit organization (hospitals, schools, municipalities & counties) that holds an exemption from federal income taxes?", dataSource: "EmployerRegistration.EmployerDto.IsExemptUnderIRS501C3", cssClass: "bold", lookupName: LookupTable.BoolConversion)
+        @Data(labelText: "If yes, is this employer applying for Reimbursable Cost Basis Financing under State law?", dataSource: "EmployerRegistration.EmployerDto.IsApplyingForREIM", cssClass: "bold", lookupName: LookupTable.BoolConversion)
+        @Data(labelText: "Did this employer acquire any or all of an employing enterprise currently registered with this agency? (To include assets, inventory and employees)?", dataSource: "EmployerRegistration.EmployerDto.IsAcquired", cssClass: "bold", lookupName: LookupTable.BoolConversion)
+        @Data(labelText: "Is there more than one physical location in State?", dataSource: "EmployerRegistration.EmployerDto.IsPresentInMultipleLoc", cssClass: "bold", lookupName: LookupTable.BoolConversion)
+        @Data(labelText: "If yes, how many?", dataSource: "EmployerRegistration.EmployerDto.NoOfLocation", cssClass: "bold")
+    }
+
+    @using (Panel(headingText: "Physical Location", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        @Data(labelText: "Do you have physical location in Washington?", dataSource: "EmployerRegistration.EmployerDto.HasPhysicalLocation", cssClass: "bold", lookupName: LookupTable.BoolConversion)
+        @Data(labelText: "Is this employer's employees telecommuters or do they work out of their homes?", dataSource: "EmployerRegistration.EmployerDto.HasTelecommuter", cssClass: "bold", lookupName: LookupTable.BoolConversion)
+        @Data(labelText: "Address Line 1:", dataSource: "PhysicalAddress.Address.AddressLine1", cssClass: "bold")
+        @Data(labelText: "Address Line 2:", dataSource: "PhysicalAddress.Address.AddressLine2", cssClass: "bold")
+        @Data(labelText: "City:", dataSource: "PhysicalAddress.Address.City", cssClass: "bold")
+        @Data(labelText: "State:", dataSource: "PhysicalAddress.Address.StateCode", lookupName: LookupTable.StatePrvnc, lookupFormat: "{Code} - {Display}", cssClass: "bold")
+        @Data(labelText: "ZIP/Postal Code:", dataSource: "PhysicalAddress.Address.Zip", cssClass: "bold")
+        @Data(labelText: "Country:", dataSource: "PhysicalAddress.Address.CountryCode", lookupName: LookupTable.Country, lookupFormat: "{Code} - {Display}", cssClass: "bold")
+        @Data(labelText: "Phone Number:", dataSource: "PhysicalAddress.Address.PhoneNumber", formatter: Formatter.Phone, cssClass: "bold")
+        @Data(labelText: "Fax:", dataSource: "PhysicalAddress.Address.FaxNumber", cssClass: "bold")
+        @Data(labelText: "E-Mail Address:", dataSource: "PhysicalAddress.Address.Email", cssClass: "bold")
+    }
+
+    @using (Panel(headingText: "Business Records Location Address", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        @Data(labelText: "Address Line 1:", dataSource: "BusinessAddress.Address.AddressLine1", cssClass: "bold")
+        @Data(labelText: "Address Line 2:", dataSource: "BusinessAddress.Address.AddressLine2", cssClass: "bold")
+        @Data(labelText: "City:", dataSource: "BusinessAddress.Address.City", cssClass: "bold")
+        @Data(labelText: "State:", dataSource: "BusinessAddress.Address.StateCode", lookupName: LookupTable.StatePrvnc, lookupFormat: "{Code} - {Display}", cssClass: "bold")
+        @Data(labelText: "ZIP/Postal Code:", dataSource: "BusinessAddress.Address.Zip", cssClass: "bold")
+        @Data(labelText: "Country:", dataSource: "BusinessAddress.Address.CountryCode", lookupName: LookupTable.Country, lookupFormat: "{Code} - {Display}", cssClass: "bold")
+        @Data(labelText: "Phone Number:", dataSource: "BusinessAddress.Address.PhoneNumber", formatter: Formatter.Phone, cssClass: "bold")
+        @Data(labelText: "Fax:", dataSource: "BusinessAddress.Address.FaxNumber", cssClass: "bold")
+        @Data(labelText: "E-Mail Address:", dataSource: "BusinessAddress.Address.Email", cssClass: "bold")
+    }
+
+    @using (Panel(headingText: "Certification", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        <p><b>Upon submission of this application:</b></p>
+        <ul>
+            <li>I understand, the information I provide in this application will be used to determine liability to pay as prescribed in the PFML Law of State and other purposes authorized by Law.</li>
+            <li>I certify, all of the information provided in this filing is complete, true and accurate. State Law provides for civil fines and criminal penalties for misinterpretation, evasion, willful non-disclosure, and failure or refusal to furnish reports or requested information to this agency.</li>
+        </ul>
+        <p><b>Acknowledge this certification by clicking 'Submit' to process your registration information.</b></p>
+        <p><b>Print this page and keep a copy for your records.</b></p>
+    }
+
+    @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+    {
+        @Button(transition: "Previous")
+        @Button(transition: "Submit")
+    }
+}

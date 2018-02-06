@@ -1,0 +1,87 @@
+<Machine IsPublic="False" IsExternal="False" RequirePersonID="False" RequireAgencyID="False" StartState="GetWagePeriod">
+  <States>
+    <Operation Name="GetWagePeriod" Service="Premium.WageDetail.WageSubmission" Operation="GetWagePeriod" ResultProperty="WageUnitDetail">
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="SelectFilingMethod" />
+      </Transitions>
+    </Operation>
+    <Page Name="SelectFilingMethod">
+      <Transitions>
+        <State Name="Next" IsDefault="False" IgnoreData="False" State="ValidateSelectionMethod" />
+      </Transitions>
+    </Page>
+    <Page Name="ManualEntry">
+      <Transitions>
+        <State Name="Next" IsDefault="False" IgnoreData="False" State="ValidateAndCalculateGrossWages" />
+        <State Name="Previous" IsDefault="False" IgnoreData="True" State="SelectFilingMethod" />
+        <State Name="Add" IsDefault="False" IgnoreData="False" State="AddAdditionalRows" />
+      </Transitions>
+    </Page>
+    <Operation Name="ValidateAndCalculateGrossWages" Service="Premium.WageDetail.WageSubmission" Operation="ValidateAndCalculateGrossWages" ResultProperty="WageUnitDetail">
+      <Parameters>
+        <Parameter DataSource="WageUnitDetail" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="DetailedSummary" />
+      </Transitions>
+    </Operation>
+    <Page Name="ProcessAndCalculateTax">
+      <Transitions>
+        <State Name="Previous" IsDefault="False" IgnoreData="True" State="DetailedSummary" />
+        <State Name="Submit" IsDefault="False" IgnoreData="False" State="CalculateAndSavePremiumData" />
+      </Transitions>
+    </Page>
+    <Page Name="WageDetailConfirmation">
+      <Transitions>
+        <State Name="Payment" IsDefault="False" IgnoreData="False" State="Payment" />
+        <State Name="Home" IsDefault="False" IgnoreData="False" State="Home" />
+      </Transitions>
+    </Page>
+    <Operation Name="CalculateAndSavePremiumData" Service="Premium.WageDetail.WageSubmission" Operation="CalculateAndSavePremiumData" ResultProperty="WageUnitDetail">
+      <Parameters>
+        <Parameter DataSource="WageUnitDetail" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="WageDetailConfirmation" />
+      </Transitions>
+    </Operation>
+    <Transfer Name="Home" Machine="Premium.WageDetail.Home" OneWay="True" />
+    <Page Name="DetailedSummary">
+      <Transitions>
+        <State Name="Next" IsDefault="False" IgnoreData="False" State="ProcessAndCalculateTax" />
+        <State Name="Previous" IsDefault="False" IgnoreData="True" State="ManualEntry" />
+      </Transitions>
+    </Page>
+    <Operation Name="ValidateSelectionMethod" Service="Premium.WageDetail.WageSubmission" Operation="ValidateSelectionMethod" ResultProperty="WageUnitDetail">
+      <Parameters>
+        <Parameter DataSource="WageUnitDetail" />
+      </Parameters>
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="FilingMethod" />
+      </Transitions>
+    </Operation>
+    <Transfer Name="Payment" Machine="Premium.Payments.MakePayment" OneWay="True" />
+    <Decision Name="FilingMethod" DataSource="WageUnitDetail.FilingMethod">
+      <Transitions>
+        <State Name="Manual" IsDefault="False" State="ManualEntry">
+          <DecisionValues>
+            <DecisionValue Value="Manu" />
+          </DecisionValues>
+        </State>
+        <State Name="Default" IsDefault="True" State="SelectFilingMethod">
+          <DecisionValues>
+            <DecisionValue Value="Copy" />
+            <DecisionValue Value="NEmp" />
+            <DecisionValue Value="Upld" />
+          </DecisionValues>
+        </State>
+      </Transitions>
+    </Decision>
+    <Code Name="AddAdditionalRows">
+      <Transitions>
+        <State Name="Next" IsDefault="False" State="ManualEntry" />
+      </Transitions>
+    </Code>
+  </States>
+  <Designer>Kj0iSXNSb3VuZGVkQ29ybmVycz1UcnVlCUJyaWRnZVR5cGU9Tm9uZSIAR2V0V2FnZVBlcmlvZD0iQ29sb3I9I0ZGMDA3MkM2CVBvc2l0aW9uPTc4MCwyNDAiAEdldFdhZ2VQZXJpb2QuTmV4dD0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxNwlTdGFydFBvaW50PTkwMCwyODAJRW5kUG9pbnQ9OTgwLDI4MAlUYXJnZXRDb25uZWN0b3I9YzEyIgBTZWxlY3RGaWxpbmdNZXRob2Q9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj05ODAsMjQwIgBTZWxlY3RGaWxpbmdNZXRob2QuTmV4dD0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMwCVN0YXJ0UG9pbnQ9MTA0MCwyNDAJRW5kUG9pbnQ9MTA4MCwxMjAJTWlkUG9pbnRzPTEwNDAsMTIwCVRhcmdldENvbm5lY3Rvcj1jMTQiAE1hbnVhbEVudHJ5PSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249MTIwMCwyNDAiAE1hbnVhbEVudHJ5Lk5leHQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jMglTdGFydFBvaW50PTEyODAuMDAwNCwyNDAJRW5kUG9pbnQ9MTMyMCwxNDAJTWlkUG9pbnRzPTEyODAsMTQwCVRhcmdldENvbm5lY3Rvcj1jMTYiAE1hbnVhbEVudHJ5LlByZXZpb3VzPSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzE0CVN0YXJ0UG9pbnQ9MTIxMiwzMDAJRW5kUG9pbnQ9MTEwMCwzMDAJVGFyZ2V0Q29ubmVjdG9yPWMxNyIATWFudWFsRW50cnkuQWRkPSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzcJU3RhcnRQb2ludD0xMjM5Ljk5OTYsMzIwCUVuZFBvaW50PTEyMzkuOTk5Niw0MDAJVGFyZ2V0Q29ubmVjdG9yPWMxIgBWYWxpZGF0ZUFuZENhbGN1bGF0ZUdyb3NzV2FnZXM9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj0xMzIwLDgwIgBWYWxpZGF0ZUFuZENhbGN1bGF0ZUdyb3NzV2FnZXMuTmV4dD0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxOQlTdGFydFBvaW50PTE0NDAsMTQwCUVuZFBvaW50PTE0ODAuMDAwNCwyNDAJTWlkUG9pbnRzPTE0ODAsMTQwCVRhcmdldENvbm5lY3Rvcj1jMiIAUHJvY2Vzc0FuZENhbGN1bGF0ZVRheD0iQ29sb3I9I0ZGMDA3MkM2CVBvc2l0aW9uPTE2MDAsMjQwIgBQcm9jZXNzQW5kQ2FsY3VsYXRlVGF4LlByZXZpb3VzPSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzE0CVN0YXJ0UG9pbnQ9MTYxMiwzMDAJRW5kUG9pbnQ9MTUyMCwzMDAJVGFyZ2V0Q29ubmVjdG9yPUF1dG8iAFByb2Nlc3NBbmRDYWxjdWxhdGVUYXguU3VibWl0PSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzAJU3RhcnRQb2ludD0xNjYwLDI0MAlFbmRQb2ludD0xNzAwLDE0MAlNaWRQb2ludHM9MTY2MCwxNDAJVGFyZ2V0Q29ubmVjdG9yPWMxNiIAV2FnZURldGFpbENvbmZpcm1hdGlvbj0iQ29sb3I9I0ZGMDA3MkM2CVBvc2l0aW9uPTE4MDAsMjQwIgBXYWdlRGV0YWlsQ29uZmlybWF0aW9uLlBheW1lbnQ9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jMTAJU3RhcnRQb2ludD0xODk5Ljk5OTYsMzIwCUVuZFBvaW50PTE5ODAsNDIwCU1pZFBvaW50cz0xOTAwLDM4MCAxOTgwLDM4MAlUYXJnZXRDb25uZWN0b3I9YzAiAFdhZ2VEZXRhaWxDb25maXJtYXRpb24uSG9tZT0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWM3CVN0YXJ0UG9pbnQ9MTgzOS45OTk2LDMyMAlFbmRQb2ludD0xNzgwLDQyMAlNaWRQb2ludHM9MTg0MC4zMzMzMzMzMzMzMywzNzcuNjY2NjY2NjY2NjY3IDE3ODAuMzMzMzMzMzMzMzMsMzgwLjMzMzMzMzMzMzMzMwlUYXJnZXRDb25uZWN0b3I9YzAiAENhbGN1bGF0ZUFuZFNhdmVQcmVtaXVtRGF0YT0iQ29sb3I9I0ZGMDA3MkM2CVBvc2l0aW9uPTE3MDAsODAiAENhbGN1bGF0ZUFuZFNhdmVQcmVtaXVtRGF0YS5OZXh0PSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzE5CVN0YXJ0UG9pbnQ9MTgyMCwxNDAJRW5kUG9pbnQ9MTg2MCwyNDAJTWlkUG9pbnRzPTE4NTkuNiwxNDAgMTg1OC44LDE2MAlUYXJnZXRDb25uZWN0b3I9YzAiAEhvbWU9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj0xNzIwLDQyMCIARGV0YWlsZWRTdW1tYXJ5PSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249MTQwMCwyNDAiAERldGFpbGVkU3VtbWFyeS5OZXh0PSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzE2CVN0YXJ0UG9pbnQ9MTUyMCwyNjAJRW5kUG9pbnQ9MTYxMiwyNjAJVGFyZ2V0Q29ubmVjdG9yPWMxMyIARGV0YWlsZWRTdW1tYXJ5LlByZXZpb3VzPSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzE0CVN0YXJ0UG9pbnQ9MTQxMiwzMDAJRW5kUG9pbnQ9MTMyMCwzMDAJVGFyZ2V0Q29ubmVjdG9yPWMxNyIAVmFsaWRhdGVTZWxlY3Rpb25NZXRob2Q9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj0xMDgwLDgwIgBWYWxpZGF0ZVNlbGVjdGlvbk1ldGhvZC5OZXh0PSJMaW5lVHlwZT1TdHJhaWdodAlTb3VyY2VDb25uZWN0b3I9YzAJU3RhcnRQb2ludD0xMTQwLDgwCUVuZFBvaW50PTEyMzAsMAlNaWRQb2ludHM9MTE0MCwwCVRhcmdldENvbm5lY3Rvcj1jMTIiAFBheW1lbnQ9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj0xOTIwLDQyMCIARmlsaW5nTWV0aG9kPSJDb2xvcj0jRkYwMDcyQzYJUG9zaXRpb249MTIwMCwtNjAiAEZpbGluZ01ldGhvZC5NYW51YWw9IkxpbmVUeXBlPVN0cmFpZ2h0CVNvdXJjZUNvbm5lY3Rvcj1jNQlTdGFydFBvaW50PTEyNjAsMjAJRW5kUG9pbnQ9MTI2MCwyNDAJVGFyZ2V0Q29ubmVjdG9yPWMwIgBGaWxpbmdNZXRob2QuRGVmYXVsdD0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMxMAlTdGFydFBvaW50PTEyMDAsLTIwCUVuZFBvaW50PTEwMDAuMDAwNCwyNDgJTWlkUG9pbnRzPTEwMDAsLTIwCVRhcmdldENvbm5lY3Rvcj1jMyIAQWRkQWRkaXRpb25hbFJvd3M9IkNvbG9yPSNGRjAwNzJDNglQb3NpdGlvbj0xMjAwLDQwMCIAQWRkQWRkaXRpb25hbFJvd3MuTmV4dD0iTGluZVR5cGU9U3RyYWlnaHQJU291cmNlQ29ubmVjdG9yPWMyCVN0YXJ0UG9pbnQ9MTI4MC4wMDA0LDQwMAlFbmRQb2ludD0xMjgwLjAwMDQsMzIwCVRhcmdldENvbm5lY3Rvcj1jOCI=</Designer>
+</Machine>

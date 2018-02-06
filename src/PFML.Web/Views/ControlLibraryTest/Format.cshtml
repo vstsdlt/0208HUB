@@ -1,0 +1,93 @@
+﻿@using (Form())
+{
+
+    @using (Panel(headingText: "Currency"))
+    {
+        @Data(labelText: "Default", dataSource: "FormatCurrency", formatter: Formatter.Currency)<br />
+        @Data(labelText: "No decimals", dataSource: "FormatCurrency", formatter: Formatter.Currency, formatDecimals: 0)
+    }
+
+    @using (Panel(headingText: "Date"))
+    {
+        @Data(labelText: "Default", dataSource: "FormatDate", formatter: Formatter.Date)<br />
+        @Data(labelText: "Overridden", dataSource: "FormatDate", formatter: Formatter.Date, formatStyle: "MMMM dd, yyyy")
+    }
+
+    @using (Panel(headingText: "DateTime"))
+    {
+        @Data(labelText: "Default", dataSource: "FormatDateTime", formatter: Formatter.DateTime)<br />
+        @Data(labelText: "Overridden", dataSource: "FormatDateTime", formatter: Formatter.DateTime, formatStyle: "MMMM dd, yyyy h:mm:ss.fff tt")
+    }
+
+    @using (Panel(headingText: "Email"))
+    {
+        @Data(labelText: "Default", dataSource: "FormatEmail", formatter: Formatter.Email)
+    }
+
+    @using (Panel(headingText: "FEIN"))
+    {
+        @Data(labelText: "Default", dataSource: "FormatFein", formatter: Formatter.Fein)
+    }
+
+    @using (Panel(headingText: "ITIN"))
+    {
+        @Data(labelText: "Default", dataSource: "FormatItin", formatter: Formatter.Itin)
+    }
+
+    @using (Panel(headingText: "Number"))
+    {
+        @Data(labelText: "Default", dataSource: "FormatNumber", formatter: Formatter.Number)
+        @Data(labelText: "5 decimals", dataSource: "FormatNumber", formatter: Formatter.Number, formatDecimals: 5)
+    }
+
+    @using (Panel(headingText: "Percent"))
+    {
+        @Data(labelText: "Default", dataSource: "FormatPercent", formatter: Formatter.Percent)
+        @Data(labelText: "3 decimals", dataSource: "FormatPercent", formatter: Formatter.Percent, formatDecimals: 3)
+    }
+
+    @using (Panel(headingText: "Phone"))
+    {
+        @Data(labelText: "Default", dataSource: "FormatPhone", formatter: Formatter.Phone)
+    }
+
+    @using (Panel(headingText: "Postal"))
+    {
+        @Data(labelText: "Default", dataSource: "FormatPostal", formatter: Formatter.Postal)
+    }
+
+    @using (Panel(headingText: "SSN"))
+    {
+        @Data(labelText: "Default", dataSource: "FormatSsn", formatter: Formatter.Ssn)
+    }
+
+    @using (Panel(headingText: "SSN or ITIN"))
+    {
+        @Data(labelText: "Default", dataSource: "FormatSsnOrItin", formatter: Formatter.SsnOrItin)
+    }
+
+    @using (Panel(headingText: "Text Alpha"))
+    {
+        @Data(labelText: "Default", dataSource: "FormatTextAlpha", formatter: Formatter.TextAlpha)
+    }
+
+    @using (Panel(headingText: "Text Alpha-Numeric"))
+    {
+        @Data(labelText: "Default", dataSource: "FormatTextAlphaNumeric", formatter: Formatter.TextAlphaNumeric)
+    }
+
+    @using (Panel(headingText: "Text Numeric"))
+    {
+        @Data(labelText: "Default", dataSource: "FormatTextNumeric", formatter: Formatter.TextNumeric)
+    }
+
+    @using (Panel(headingText: "Time"))
+    {
+        @Data(labelText: "Default", dataSource: "FormatTime", formatter: Formatter.DateTime)<br />
+        @Data(labelText: "Overridden", dataSource: "FormatTime", formatter: Formatter.DateTime, formatStyle: "HH:mm:ss.fff")
+    }
+
+    <br />
+    @Button(transition: "Refresh")
+    @Button(transition: "Close")
+}

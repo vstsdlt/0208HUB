@@ -1,0 +1,22 @@
+﻿@using FACTS.Framework.Lookup;
+@Html.Partial("WizardHeader", Machine["ListSection"], new ViewDataDictionary(this.ViewData) { { "current", (LookupCode)Machine["CurrentSection"] }, { "showHeader", (bool)Machine["ShowHeader"] } })
+
+@using (Form())
+{
+        @using (Panel(headingText: "Reporting Period", defaultControlColumns: 4, defaultLabelColumns: 4))
+        {
+            @SelectBox(labelText: "Employment and Wages Paid for the Quarter:", dataSource: "WageUnitDetail.ReportingQuarter", lookupName: LookupTable.Quarter, lookupSort: "DisplaySortOrder", required: "true", text: (string)Machine["WageFilingDefaultQuarter"])
+            @SelectBox(labelText: "Year:", dataSource: "WageUnitDetail.ReportingYear", items: (List<FACTS.Framework.Support.HtmlValueText>)Machine["ReportingYearList"], text: (string)Machine["WageFilingDefaultYear"], required: "true")
+        }
+        @using (Panel(headingText: "Filing Methods", defaultControlColumns: 5, defaultLabelColumns: 7))
+        {
+            <p><b>If you have to report any changes to your account such as a Change in Ownership or Change of Address, please use the Account Maintenance link to perform these updates before you report employment and quarterly wages.</b></p>
+            
+            @RadioButtonGroup(labelText: "Select from the following Filing Methods:",lookupName: LookupTable.WageDetailFilingMethod, lookupSort: "{DisplaySortOrder}", required: "true", lookupFormat: "{description}", listStyle: ListStyle.Stacked, dataSource: "WageUnitDetail.FilingMethod",layoutStyle:LayoutStyle.Top)
+        }
+
+        @using (Panel(stateFilter: "SelectFilingMethod", borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+        {
+            @Button(transition: "Next")
+        }
+}

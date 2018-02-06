@@ -1,0 +1,40 @@
+﻿@Html.Partial("WizardHeader", Machine["ListSection"], new ViewDataDictionary(this.ViewData) { { "current", Machine["CurrentSection"] }, { "showHeader", Machine["ShowHeader"] } })
+
+@using (Form())
+{
+    @using (Panel(headingText: "Registration Status", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        <p>This is confirmation of successful registration. Print a copy of this page for your records.</p>
+    }
+
+    @using (Panel(headingText: "Determination of Employer Status", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        <p>Effective <b>@Convert.ToDateTime(Machine["EmployerRegistration.EmployerDto.LiabilityDate"]).ToString("MMMM dd, yyyy")</b>, this employer is subject to State PFML law. This employer is required to submit quarterly Employment and Wage Detail reports and pay taxes on the wages paid to each of its covered employees.</p>
+    }
+
+    @using (Panel(headingText: "PFML Employer Account Number", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        @Data(labelText: "Legal Name:", dataSource: "EmployerRegistration.EmployerDto.EntityName", cssClass: "bold")
+        @Data(labelText: "Doing Business As (DBA) Name:", dataSource: "EmployerRegistration.EmployerUnitDto.DoingBusinessAsName", cssClass: "bold")
+        @Data(labelText: "Employer Account Number:", dataSource: "EmployerRegistration.EmployerDto.EmployerId", cssClass: "bold")
+    }
+
+    @using (Panel(headingText: "Notice of PFML Premium Rate", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        <p>The following Paid Family and Medical Leave (PFML) premium rate has been assigned:</p>
+        @Data(labelText: $"{FACTS.Framework.Utility.DateTimeUtil.Now.ToString("yyyy")}:", dataSource: "PremiumRate", cssClass: "bold")
+    }
+
+    @using (Panel(headingText: "Quarterly Employment and Wage Detail Report Information", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        <p>This employer is required to submit quarterly Employment and Wage Detail reports. Employment and Wage Detail reports may be submitted using the user name and password set during this registration. Quarterly reports are due by the last day of the month following the end of the quarter. Complete and submit the reports with payments promptly. Interest charges and penalties are mandated by law on overdue contributions.</p>
+        <p>The information provided during registration indicates that an employment and wage detail report is required for the quarter ending <b>@Convert.ToDateTime(Machine["LastDayCurrentQuarter"]).ToString("MMMM dd, yyyy")</b> and all subsequent quarters.</p>
+        <p>You must provide information regarding the purchase of a business. You are required to furnish a copy of the purchase agreement, Bill of Sale, or other legal instrument used to document the acquisition.</p>
+        <p>You indicated that this employer is an out of state employer that is seeking to transfer experience history from another state. Contact State support team for information on how to complete this transfer.</p>
+    }
+
+    @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+    {
+        @Button(transition: "Home", cssClass: "text-center")
+    }
+}

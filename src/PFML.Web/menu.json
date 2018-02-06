@@ -1,0 +1,28 @@
+﻿[
+		{
+				"Description": "Home",
+				"DisplayText": "PFML Home",
+				"TargetMachine": "Home"
+		},
+		{
+			"Description": "Employer",
+			"DisplayText": "Employer",
+      "Children": [
+        {
+          "Description": "Employer Registration",
+          "DisplayText": "Employer Registration",
+          "TargetMachine": "Premium.Registration.EmployerRegistration"
+        },
+        {
+          "Description": "Voluntary Plan Waiver",
+          "DisplayText": "Voluntary Plan Waiver",
+          "TargetMachine": "Premium.Waiver.VPRequest"
+        },
+        {
+          "Description": "Wage Detail Home",
+          "DisplayText": "Wage Detail Home",
+          "TargetMachine": "Premium.WageDetail.Home"
+        }
+      ]
+		}
+]

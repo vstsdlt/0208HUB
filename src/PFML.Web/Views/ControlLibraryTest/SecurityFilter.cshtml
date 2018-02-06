@@ -1,0 +1,54 @@
+﻿@using (Form())
+{
+    @using (Panel(headingText: "CheckBox parent"))
+    {
+        @CheckBox(labelText: "Parent (checked=Full, unchecked=Read)", dataSource: "SecurityFilterCheckBox", checkedValue: "ACTIVE")
+        @Button(labelText: "Button", securityFilter: "SecurityFilterCheckBox = 'ACTIVE';", transition: "Refresh")
+    }
+    @using (Panel(headingText: "RadioButton parent"))
+    {
+        @RadioButton(labelText: "Parent (Full)", dataSource: "SecurityFilterRadioButton", checkedValue: "F")
+        @RadioButton(labelText: "Parent (Read)", dataSource: "SecurityFilterRadioButton", checkedValue: "R")
+        @RadioButton(labelText: "Parent (None)", dataSource: "SecurityFilterRadioButton", checkedValue: "N")
+        @Button(labelText: "Button", securityFilter: "SecurityFilterRadioButton = 'F';SecurityFilterRadioButton = 'R'", transition: "Refresh")
+    }
+    @using (Panel(headingText: "RadioButtonGroup parent"))
+    {
+        @RadioButtonGroup(labelText: "Parent", dataSource: "SecurityFilterRadioButtonGroup", lookupName: LookupTable.AgencyContactType)
+        @Button(labelText: "Button", securityFilter: $"SecurityFilterRadioButtonGroup = '{LookupTable_AgencyContactType.AgencyHead}';SecurityFilterRadioButtonGroup = '{LookupTable_AgencyContactType.ReportingOfficial}'", transition: "Refresh")
+    }
+    @using (Panel(headingText: "SelectBox parent"))
+    {
+        @SelectBox(labelText: "Parent", dataSource: "SecurityFilterSelectBox", lookupName: LookupTable.AgencyContactType)
+        @Button(labelText: "Button", securityFilter: $"SecurityFilterSelectBox = '{LookupTable_AgencyContactType.AgencyHead}';SecurityFilterSelectBox = '{LookupTable_AgencyContactType.ReportingOfficial}'", transition: "Refresh")
+    }
+    @using (Panel(headingText: "TextBox parent"))
+    {
+        @TextBox(labelText: "Parent (F=Full, R=Read, *=None)", dataSource: "SecurityFilterTextBox")
+        @Button(labelText: "Button", securityFilter: "SecurityFilterTextBox == 'F';SecurityFilterTextBox == 'R'", transition: "Close")
+        @BulletedList(labelText: "BulletedList", securityFilter: "SecurityFilterTextBox == 'F';SecurityFilterTextBox == 'R'", lookupName: LookupTable.AgencyContactType)
+        @CheckBox(labelText: "CheckBox", securityFilter: "SecurityFilterTextBox == 'F';SecurityFilterTextBox == 'R'", dataSource: "SecurityFilterTextBoxCheckBox", caption: "caption")
+        @CheckBox(labelText: "CheckBox", securityFilter: "SecurityFilterTextBox == 'F';SecurityFilterTextBox == 'R'", dataSource: "SecurityFilterTextBoxCheckBox", caption: "caption", isSwitch: true)
+        @CheckBoxGroup(labelText: "CheckBoxGroup", securityFilter: "SecurityFilterTextBox == 'F';SecurityFilterTextBox == 'R'", dataSource: "SecurityFilterTextBoxCheckBoxGroup", lookupName: LookupTable.AgencyContactType)
+        @Data(labelText: "Data", securityFilter: "SecurityFilterTextBox == 'F';SecurityFilterTextBox == 'R'", text: "data")
+        @RadioButton(labelText: "RadioButton", securityFilter: "SecurityFilterTextBox == 'F';SecurityFilterTextBox == 'R'", dataSource: "SecurityFilterTextBoxRadioButton", caption: "caption")
+        @RadioButtonGroup(labelText: "RadioButtonGroup", securityFilter: "SecurityFilterTextBox == 'F';SecurityFilterTextBox == 'R'", dataSource: "SecurityFilterTextBoxRadioButtonGroup", lookupName: LookupTable.AgencyContactType)
+        @SelectBox(labelText: "SelectBox", securityFilter: "SecurityFilterTextBox == 'F';SecurityFilterTextBox == 'R'", dataSource: "SecurityFilterTextBoxSelectBox", text: "FL", lookupName: LookupTable.State)
+        @TextBox(labelText: "TextBox", securityFilter: "SecurityFilterTextBox == 'F';SecurityFilterTextBox == 'R'", dataSource: "SecurityFilterTextBoxTextBox", text: "Sample Text")
+        @TextBox(labelText: "TextBox (w/ button)", securityFilter: "SecurityFilterTextBox == 'F';SecurityFilterTextBox == 'R'", dataSource: "SecurityFilterTextBoxTextBoxBtn", text: "Sample Text", transition: "Close")
+        @TextBox(labelText: "TextBox (area)", securityFilter: "SecurityFilterTextBox == 'F';SecurityFilterTextBox == 'R'", dataSource: "SecurityFilterTextBoxTextBoxArea", text: "Sample Text", multiLine: true)
+    }
+    @using (Panel(headingText: "TextArea parent"))
+    {
+        @TextBox(labelText: "Parent (F=Full, R=Read, *=None)", dataSource: "SecurityFilterTextArea", multiLine: true)
+        @Button(labelText: "Button", securityFilter: "SecurityFilterTextArea == 'F';SecurityFilterTextArea == 'R'", transition: "Refresh")
+    }
+    @using (Panel(headingText: "CheckBox parent"))
+    {
+        @CheckBox(labelText: "Parent (checked=Full, unchecked=Read)", dataSource: "SecurityFilterCheckBoxMethod", checkedValue: "ACTIVE")
+        @TextBox(labelText: "Child", securityFilter: "SecurityFilterCheck(SecurityFilterCheckBoxMethod);true", dataSource: "SecurityFilterCheckBoxMethodChild")
+    }
+    <br />
+    @Button(transition: "Refresh")
+    @Button(transition: "Close")
+}

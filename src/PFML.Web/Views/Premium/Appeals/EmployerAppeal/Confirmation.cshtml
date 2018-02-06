@@ -1,0 +1,46 @@
+﻿
+@using (Form())
+{
+    @using (Panel(headingText: "Determination Information", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        @Data(labelText: "Document Identification Number:", dataSource: "AppealDetails.PremiumAppealDetailDto.CorrespondenceId")
+        @Data(labelText: "Mailing Date of Determination:", dataSource: "AppealDetails.PremiumAppealDetailDto.CreateDateTime")
+        @Data(labelText: "Determination Type:", dataSource: "AppealDetails.PremiumAppealDetailDto.DeterminationCorrespondanceId")
+    }
+    @using (Panel(headingText: "Contact Information", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        @Data(labelText: "Name of Individual Filing Appeal or Request for Review:", dataSource: "AppealDetails.PremiumAppealDetailDto.IndividualFilingAppealName", formatter: Formatter.Number)
+        @Data(labelText: "Name of Contact Person:", dataSource: "AppealDetails.PremiumAppealDetailDto.ContactPersonName",  formatter: Formatter.Number)
+        @Data(labelText: "Phone Number of Contact Person:", dataSource: "AppealDetails.PremiumAppealDetailDto.PhoneNumber", formatter: Formatter.Number)
+        @Data(labelText: "Ext:", dataSource: "AppealDetails.PremiumAppealDetailDto.PhoneNumberExtn",  labelColumns: 1, controlColumns: 1)
+    }
+    @using (Panel(headingText: "Address Information", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        @Data(labelText: "Address Type", lookupName: LookupTable.AddressType, dataSource: "AppealDetails.AddressLinkDto.AddressTypeCode")
+        @Data(labelText: "Address Line 1:", formatter: Formatter.TextAlphaNumeric, dataSource: "AppealDetails.AddressLinkDto.Address.AddressLine1", looseValidation: true)
+        @Data(labelText: "Address Line 2:", formatter: Formatter.TextAlphaNumeric, dataSource: "AppealDetails.AddressLinkDto.Address.AddressLine2", looseValidation: true)
+        @Data(labelText: "City:", formatter: Formatter.TextAlpha, dataSource: "AppealDetails.AddressLinkDto.Address.City", looseValidation: true)
+        @Data(labelText: "State:", lookupName: LookupTable.StatePrvnc, lookupFormat: "{Code} - {Display}", dataSource: "AppealDetails.AddressLinkDto.Address.StateCode")
+        @Data(labelText: "ZIP/Postal Code:", formatter: Formatter.Postal, dataSource: "PhysicalAddress.Address.Zip")
+        @Data(labelText: "Country:", lookupName: LookupTable.Country, lookupFormat: "{Code} - {Display}", dataSource: "AppealDetails.AddressLinkDto.Address.CountryCode")
+        @Data(labelText: "Phone Number:", formatter: Formatter.Phone, dataSource: "AppealDetails.AddressLinkDto.Address.PhoneNumber")
+        @Data(labelText: "Fax:", formatter: Formatter.TextNumeric, dataSource: "AppealDetails.AddressLinkDto.Address.FaxNumber")
+        @Data(labelText: "E-Mail:", formatter: Formatter.Email, dataSource: "AppealDetails.AddressLinkDto.Address.Email")
+        @Data(labelText: "Re-Enter E-Mail:", formatter: Formatter.Email, dataSource: "ReEnterEmail")
+    }
+    @using (Panel(headingText: "Non Timely Request", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        <p>Your request for review or appeal of this determination is not timely per State Law. The mailing date of the determination was <mailing date> which is greater than 15 days from the current date. Under Law, non-timely appeals or requests for review may be heard only if good cause can be shown for the non-timeliness. In the space provided below, enter the reason the appeal or request for review is not timely.</p>
+        @Data(labelText: "Reason for Late Appeal or Request for Review:", formatter: Formatter.Email, dataSource: "AppealDetails.NonTimelyNoteDto.NoteText")
+    }
+    @using (Panel(headingText: "Details", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        <p>State with particularity the basis on which you feel the determination is in error and any additional facts or evidence you have in support of your request for review or appeal. You may also mail documents that support your request for review or appeal to the Agency, an address will be provided at the end of this process.</p>
+        @Data(labelText: "Reason for Appeal or Request for Review <br/>(1, 000 characters max):", formatter: Formatter.Email, dataSource: "AppealDetails.ReasonNoteDto.NoteText")
+    }
+    @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+    {
+        @Button(transition: "Previous")
+        @Button(transition: "Submit")
+    }
+}

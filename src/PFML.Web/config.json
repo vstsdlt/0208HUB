@@ -1,0 +1,29 @@
+﻿{
+  "logging": {
+    "LogLevel": "Trace",
+    "LogLevelSystem": "Error",
+    "idPrefix": "DW01",
+    "sizeCap": 0,
+    "filespec": "C:\\FACTS Logs\\{year}{month}{day}-{idPrefix}.dlf"
+  },
+  "service": {
+    "host": "localhost",
+    "port": 8001,
+    "timeout": 300
+  },
+  "application": {
+  },
+  "layout": {
+    "footer": {
+      "text": ""
+    },
+    "header": {
+      "alt": "ESD",
+      "src": "headerLogo.png"
+    },
+    "standard": {
+      "bodyClass": "menu-on-top",
+      "stylesheets": [ "components.css", "ui-elements.css", "custom.css", "circle.css", "processbar.css" ]
+    }
+  }
+}

@@ -1,0 +1,140 @@
+﻿@using (Form())
+{
+    @using (Panel(headingText: "Bulleted List", isCollapsible: true, id: "panelBulletedList"))
+    {
+        @BulletedList(dataSource: "BasicBulletedListData")
+        <hr />
+        @BulletedList(dataSource: "BasicBulletedListData", listStyle: ListStyle.Scrolling)
+    }
+
+    @using (Panel(headingText: "Button", isCollapsible: true))
+    {
+        @Button(text: "Sample")
+    }
+
+    @using (Panel(headingText: "Button Group", isCollapsible: true, id: "panelButtonGroup"))
+    {
+        @using (ButtonGroup())
+        {
+            @Button(text: "Left")
+            @Button(text: "Middle")
+            @Button(text: "Right")
+        }
+        <br />
+        <hr />
+        @using (ButtonGroup(buttonGroupStyle: ButtonGroupStyle.Vertical))
+        {
+            @Button(text: "Top")
+            @Button(text: "Middle")
+            @Button(text: "Bottom")
+        }
+    }
+
+    @using (Panel(headingText: "CheckBox", isCollapsible: true))
+    {
+        @CheckBox(labelText: "Sample", caption: "Caption")
+        <hr />
+        @CheckBox(labelText: "Switch", isSwitch: true, caption: "Caption")
+        @CheckBox(labelText: "Switch (yes/no)", isSwitch: true, switchTextOn: "Yes", switchTextOff: "No")
+        <hr />
+        <p>Multiple controls stacked:</p>
+        @CheckBox(labelText: "Sample 1")
+        @CheckBox(labelText: "Sample 2")
+        @CheckBox(labelText: "Sample 3")
+        <hr />
+        <p>DataSource Types:</p>
+        @CheckBox(labelText: "Boolean DataSource", dataSource: "BasicCheckBoxBool")<br />
+        @CheckBox(labelText: "String DataSource", dataSource: "BasicCheckBoxString", checkedValue: "Yes")<br />
+        @:Multiple (delineated string): @CheckBox(labelText: "One", dataSource: "BasicCheckBoxStringMulti", checkedValue: "One") @CheckBox(labelText: "Two", dataSource: "BasicCheckBoxStringMulti", checkedValue: "Two") @CheckBox(labelText: "Three", dataSource: "BasicCheckBoxStringMulti", checkedValue: "Three")<br />
+        @:Multiple (string[]): @CheckBox(labelText: "One", dataSource: "BasicCheckBoxArray", checkedValue: "One") @CheckBox(labelText: "Two", dataSource: "BasicCheckBoxArray", checkedValue: "Two") @CheckBox(labelText: "Three", dataSource: "BasicCheckBoxArray", checkedValue: "Three")<br />
+        @:Multiple (List&lt;string&gt;): @CheckBox(labelText: "One", dataSource: "BasicCheckBoxList", checkedValue: "One") @CheckBox(labelText: "Two", dataSource: "BasicCheckBoxList", checkedValue: "Two") @CheckBox(labelText: "Three", dataSource: "BasicCheckBoxList", checkedValue: "Three")<br />
+    }
+
+    @using (Panel(headingText: "CheckBoxGroup", isCollapsible: true))
+    {
+        @CheckBoxGroup(labelText: "Horizontal", dataSource: "BasicCheckBoxGroup1", lookupName: LookupTable.State, lookupFilter: "code<'B'", listStyle: ListStyle.Horizontal)
+        <hr />
+        @CheckBoxGroup(labelText: "Stacked", dataSource: "BasicCheckBoxGroup2", lookupName: LookupTable.State, lookupFilter: "code<'B'", listStyle: ListStyle.Stacked)
+        <hr />
+        @CheckBoxGroup(labelText: "Scrolling", dataSource: "BasicCheckBoxGroup3", lookupName: LookupTable.State, lookupFilter: "code<'B'", listStyle: ListStyle.Scrolling)
+    }
+
+    @using (Panel(headingText: "Data", isCollapsible: true))
+    {
+        @Data(labelText: "One", text: "One")
+        @Data(labelText: "Two", text: "Two")
+        @Data(labelText: "Three", text: "Three")
+        <p>Inline example of data:  The quick brown @Data(text: "fox", ignoreLayout: true) jumped over the lazy @Data(text: "dog", ignoreLayout: true).</p>
+    }
+
+    @using (Panel(headingText: "Panel", isCollapsible: true))
+    {
+        <p>This section intentionally left blank...</p>
+    }
+
+    @using (Panel(headingText: "RadioButton", isCollapsible: true))
+    {
+        @RadioButton(labelText: "Sample", caption: "Caption")
+        <hr />
+        @RadioButton(labelText: "Switch", isSwitch: true, caption: "Caption")
+        @RadioButton(labelText: "Switch (yes/no)", isSwitch: true, switchTextOn: "Yes", switchTextOff: "No")
+        <hr />
+        <p>Multiple controls stacked:</p>
+        @RadioButton(labelText: "Sample 1", name: "radioButton2")
+        @RadioButton(labelText: "Sample 2", name: "radioButton2")
+        @RadioButton(labelText: "Sample 3", name: "radioButton2")
+        <hr />
+        <p>DataSource Types:</p>
+        @RadioButton(labelText: "Boolean DataSource", dataSource: "BasicRadioButtonBool")<br />
+        @RadioButton(labelText: "String DataSource", dataSource: "BasicRadioButtonString", checkedValue: "Yes")<br />
+        @:Multiple: @RadioButton(labelText: "One", dataSource: "BasicRadioButtonMulti", checkedValue: "One") @RadioButton(labelText: "Two", dataSource: "BasicRadioButtonMulti", checkedValue: "Two") @RadioButton(labelText: "Three", dataSource: "BasicRadioButtonMulti", checkedValue: "Three")<br />
+    }
+
+    @using (Panel(headingText: "RadioButtonGroup", isCollapsible: true))
+    {
+        @RadioButtonGroup(labelText: "Horizontal", dataSource: "BasicRadioButtonGroup1", lookupName: LookupTable.State, lookupFilter: "code<'B'", listStyle: ListStyle.Horizontal)
+        <hr />
+        @RadioButtonGroup(labelText: "Stacked", dataSource: "BasicRadioButtonGroup2", lookupName: LookupTable.State, lookupFilter: "code<'B'", listStyle: ListStyle.Stacked)
+        <hr />
+        @RadioButtonGroup(labelText: "Scrolling", dataSource: "BasicRadioButtonGroup3", lookupName: LookupTable.State, lookupFilter: "code<'B'", listStyle: ListStyle.Scrolling)
+    }
+
+    @using (Panel(headingText: "Repeater", isCollapsible: true, defaultLabelColumns: 4, defaultControlColumns: 4))
+    {
+        @Data(labelText: "Sample", dataSource: "BasicRepeaterRecord?.Field2")        
+        @Blank()
+        <hr/>
+        while (Repeater("BasicRepeaterRecords"))
+        {
+            @TextBox(labelText: "Sample", dataSource: "Field2", formatter: Formatter.Currency)
+            @Button(transition: "Refresh", targetDataSource: "BasicRepeaterRecord", labelColumns: 0)
+
+            while (Repeater("Children"))
+            {
+                @Data(labelText: "Sample", dataSource: "Field2", formatter: Formatter.Currency)
+                @Button(transition: "Refresh", targetDataSource: "BasicRepeaterRecord", labelColumns: 0)
+            }
+        }
+    }
+
+    @using (Panel(headingText: "SelectBox", isCollapsible: true))
+    {
+        @SelectBox(labelText: "Default", dataSource: "BasicDropDownList1", lookupName: LookupTable.State)<br />
+        @SelectBox(labelText: "ListBox", dataSource: "BasicDropDownList2", lookupName: LookupTable.State, size: 8)<br />
+        @SelectBox(labelText: "Multi-select", dataSource: "BasicDropDownList3", lookupName: LookupTable.State, multiple: true)
+        @SelectBox(labelText: "Dual-select", dataSource: "BasicDropDownList4", lookupName: LookupTable.State, showDual: true)
+    }
+
+    @using (Panel(headingText: "TextBox", isCollapsible: true))
+    {
+        @TextBox(labelText: "Simple")<br />
+        @TextBox(labelText: "With Placeholder", placeholder: "Sample Placeholder")<br />
+        @TextBox(labelText: "Multi-line", multiLine: true, placeholder: "Sample Placeholder", dataSource: "BasicTextBoxMultiline", stateFilter: "Basic;")
+        @TextBox(labelText: "Navigation", dataSource: "test123", transition: "Close", transitionGlyph: "search", formatter: Formatter.Date)
+        @TextBox(labelText: "Password", isPassword: true)<br />
+    }
+
+    <br />
+    @Button(transition: "Refresh")
+    @Button(transition: "Close")
+}

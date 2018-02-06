@@ -1,0 +1,20 @@
+﻿@Html.Partial("WizardHeader", Machine["ListSection"], new ViewDataDictionary(this.ViewData) { { "current", Machine["CurrentSection"] }, { "showHeader", Machine["ShowHeader"] } })
+
+@using (Form())
+{
+    @using (Panel(headingText: "Enter Employer Business Information", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        @Data(labelText: "Legal Entity Type:", lookupName: LookupTable.LegalEntity, dataSource: "EmployerRegistration.EmployerDto.EntityTypeCode")
+        @Data(labelText: "Business Type:", lookupName: LookupTable.BusinessType, dataSource: "EmployerRegistration.EmployerDto.BusinessTypeCode", securityFilter: "IsPublicEntity==false")
+        @Data(labelText: "FEIN:", dataSource: "EmployerRegistration.EmployerDto.Fein")
+        @RadioButtonGroup(labelText: "Will this employer act as a Professional Employer Organization(PEO)?", lookupName: LookupTable.BoolYesNo, lookupSort: "{DisplaySortOrder}", dataSource: "EmployerRegistration.EmployerDto.IsProfessionalEmployerOrg", required: "true")
+        @RadioButtonGroup(labelText: "Is this employer the client of a PEO?", lookupName: LookupTable.BoolYesNo, lookupSort: "{DisplaySortOrder}", dataSource: "EmployerRegistration.EmployerDto.IsClientOfPEO", required: "true")
+        @RadioButtonGroup(labelText: "Does this employer have workers considered to be independent contractors?", lookupName: LookupTable.BoolYesNo, lookupSort: "{DisplaySortOrder}", dataSource: "EmployerRegistration.EmployerDto.IsIndividualContractor", required: "true")
+    }
+
+    @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+    {
+        @Button(transition: "Previous")
+        @Button(transition: "Next")
+    }
+}

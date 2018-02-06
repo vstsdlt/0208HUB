@@ -1,0 +1,34 @@
+{
+  "connections": {
+    "PFML.DAL.Model.DbContext": {
+      "generate": null,
+      "provider": "@[..\\..\\PFML.Service\\config.json:dal:dbProvider]",
+      "connectionString": "@[..\\..\\PFML.Service\\config.json:dal:connections:PFML.DAL.Model.DbContext:connectionString]",
+      "dummyTable": "LookupCode",
+      "auditFields": {
+        "createUser": [ "CreateUserId" ],
+        "createTimestamp": [ "CreateDateTime" ],
+        "updateUser": [ "UpdateUserId" ],
+        "updateTimestamp": [ "UpdateDateTime" ],
+        "concurrency": [ "UpdateNumber" ],
+        "updateNumber": [ "UpdateNumber" ],
+        "updateProcess": [ "UpdateProcess" ]
+      },
+      "includes": [
+        "dbo.*"
+      ],
+      "excludes": [
+        "sysdiagrams",
+      ],
+      "readOnlyObjects": [
+      ],
+      "replacements": [
+      ],
+      "singulars": [
+      ],
+      "inheritedTables": [
+        "VoluntaryPlanWaiverRequest"
+      ],
+    }
+  }
+}

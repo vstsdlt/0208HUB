@@ -1,0 +1,23 @@
+﻿@using (Form())
+{
+    @using (Panel(headingText: "Dual Lookup - linked by code"))
+    {
+        @SelectBox(labelText: "Parent", dataSource: "LookupFilterDualLookupCode", lookupName: LookupTable.State)
+        @SelectBox(labelText: "Child", dataSource: "LookupFilterDualLookupCodeChild", lookupName: LookupTable.State, lookupFilter: $"Code = LookupFilterDualLookupCode")
+    }
+    @using (Panel(headingText: "Reciprocal State Indicator"))
+    {
+        @TextBox(labelText: "Reciprocal State Indicator (Y or N)", dataSource: "LookupFilterSelectInd")
+        @SelectBox(labelText: "Child", dataSource: "LookupFilterSelectIndSelectBox", lookupName: LookupTable.State, lookupFilter: $"LookupFilterSelectInd = {LookupTable_State_Properties.ReciprocalStateInd}")
+        @BulletedList(labelText: "Child", lookupName: LookupTable.State, lookupFilter: $"LookupFilterSelectInd = {LookupTable_State_Properties.ReciprocalStateInd}")
+    }
+    @using (Panel(headingText: "Method Callback"))
+    {
+        @SelectBox(labelText: "Enumerable", dataSource: "LookupFilterMethodStateEnumerable", lookupName: LookupTable.State, lookupFilter: "LookupFilterStateEnumerable() ^ code")
+        @SelectBox(labelText: "Enumerable w/ literal param", dataSource: "LookupFilterMethodStateEnumerableLiteralParam", lookupName: LookupTable.State, lookupFilter: "LookupFilterStateParamEnumerable('AL') ^ code")
+        @SelectBox(labelText: "Enumerable w/ datasource param", dataSource: "LookupFilterMethodStateEnumerableDataSourceParam", lookupName: LookupTable.State, lookupFilter: "LookupFilterStateParamEnumerable(LookupFilterMethodStateEnumerable) ^ code")
+    }
+    <br />
+    @Button(transition: "Refresh")
+    @Button(transition: "Close")
+}

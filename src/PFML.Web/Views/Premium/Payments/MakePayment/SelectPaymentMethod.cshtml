@@ -1,0 +1,29 @@
+﻿@Html.Partial("EmployerHeaderWizard", Machine["ListSection"], new ViewDataDictionary(ViewData) { { "current", (LookupCode)Machine["CurrentSection"] }, { "showHeader", (bool)Machine["ShowHeader"] } })
+
+@using (Form())
+{
+    @using (Panel(headingText: "Payment Method", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        @Data(labelText: "Payment Due Dates:", dataSource: "PaymentDueDates", cssClass: "bold")
+        @Data()
+        <br />
+        <p class="paragraphIndent">If payment is not submitted by the dates indicated, you will be assessed interest and / or penalties.</p>
+        @Data(labelText: "Amount Due:", dataSource: "AmountDue", formatter: Formatter.Currency, cssClass: "bold")
+        if ((decimal)Machine["PrePaymentAmount"] > 0)
+        {
+            @Data(labelText: "Total:", dataSource: "TotalAmount", formatter: Formatter.Currency, cssClass: "bold")
+        }
+        @TextBox(labelText: "Payment Amount:", required: "true", dataSource: "EnteredPaymentAmount", formatter: Formatter.Currency, maxValue: Convert.ToDecimal(Machine["TotalAmount"]), minValue: 0.01)
+        @SelectBox(labelText: "Payment Method:", dataSource: "PaymentMethodType", lookupName: LookupTable.PaymentMethodType, required: "true", lookupFilter: "Code=='ACHD'", blankItem: false)
+        
+        @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+        {
+            <br />
+            @Button(text: "Next", transition: "Next")
+        }
+    }
+}
+
+
+
+

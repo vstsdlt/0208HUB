@@ -1,0 +1,64 @@
+﻿@using (Form())
+{
+	@using (Panel(headingText: "Voluntary Plan Waiver", defaultLabelColumns: 0, defaultControlColumns: 12))
+	{
+		<p> You can apply for waiver from premiums if your organization participates in a voluntary plan that matches or exceeds the paid leavel benefits guaranteed in the WA PFML legislation.</p>
+		@using (Panel(panelLayout: PanelLayout.Inline, borderVisible: false))
+		{
+			<h6>Voluntary Plan Details</h6>
+			<span>Dates the Voluntary Plan is available to employees in 2018 From</span>
+			@TextBox(formatter: Formatter.Date, dataSource: "Form.StartDate", required: "true", minValue: Machine["MinStartDate"], maxValue: new DateTime(DateTime.Now.Year, 12, 31))
+			<span>to </span>
+			@TextBox(formatter: Formatter.Date, dataSource: "Form.EndDate", required: "true", minValue: DateTime.Today, maxValue: DateTime.Today.AddYears(1).AddDays(-1))
+			<p>
+				If the patient (care recipient) was treated at an address other than those shown below, navigate to your profile and add the treatment address. Once you have updated your treatment address repeat the same steps to return to this point to complete the form. You should only submit this form online if you have used your California medical license to treat the patient (care recipient).
+			</p>
+		}
+		@using (Panel(borderVisible: false, panelLayout: PanelLayout.Grid, defaultControlColumns: 3, defaultLabelColumns: 1))
+		{
+			@Data(text: "Types of Leave available")
+			@Data(text: "Weeks available anually")
+			@Data(text: "Percentage of wage paid")
+
+			@CheckBox(dataSource: $"Form.VoluntaryPlanWaiverRequestTypes[{ Machine["TypeMedicalIndex"]}].LeaveTypeCode", caption: "Medical", checkedValue: LookupTable_WaiverLeaveType.Medical, uncheckedValue: null)
+			@SelectBox(dataSource: $"Form.VoluntaryPlanWaiverRequestTypes[{ Machine["TypeMedicalIndex"]}].DurationInWeeksCode", blankItemText: "select", lookupName: LookupTable.WaiverWeeksAvailable)
+			@TextBox(dataSource: $"Form.VoluntaryPlanWaiverRequestTypes[{ Machine["TypeMedicalIndex"]}].PercentagePaid", minValue: 0, maxValue: 100, formatter: Formatter.Percent, formatDecimals: 2)
+
+			@CheckBox(dataSource: $"Form.VoluntaryPlanWaiverRequestTypes[{ Machine["TypeBirthIndex"]}].LeaveTypeCode", caption: "Paternity- Birth Father", uncheckedValue: null, checkedValue: LookupTable_WaiverLeaveType.PaternityBirthFather)
+			@SelectBox(dataSource: $"Form.VoluntaryPlanWaiverRequestTypes[{ Machine["TypeBirthIndex"]}].DurationInWeeksCode", blankItemText: "select", lookupName: LookupTable.WaiverWeeksAvailable)
+			@TextBox(dataSource: $"Form.VoluntaryPlanWaiverRequestTypes[{ Machine["TypeBirthIndex"]}].PercentagePaid", minValue: 0, maxValue: 100, formatter: Formatter.Percent, formatDecimals: 2)
+
+			@CheckBox(dataSource: $"Form.VoluntaryPlanWaiverRequestTypes[{ Machine["TypeAdoptionIndex"]}].LeaveTypeCode", caption: "Paternity - Adoption", uncheckedValue: null, checkedValue: LookupTable_WaiverLeaveType.PaternityAdoption)
+			@SelectBox(dataSource: $"Form.VoluntaryPlanWaiverRequestTypes[{ Machine["TypeAdoptionIndex"]}].DurationInWeeksCode", blankItemText: "select", lookupName: LookupTable.WaiverWeeksAvailable)
+			@TextBox(dataSource: $"Form.VoluntaryPlanWaiverRequestTypes[{ Machine["TypeAdoptionIndex"]}].PercentagePaid", minValue: 0, maxValue: 100, formatter: Formatter.Percent, formatDecimals: 2)
+
+			@CheckBox(dataSource: $"Form.VoluntaryPlanWaiverRequestTypes[{ Machine["TypeCaregiverIndex"]}].LeaveTypeCode", caption: "Caregiver", uncheckedValue: null, checkedValue: LookupTable_WaiverLeaveType.Caregiver)
+			@SelectBox(dataSource: $"Form.VoluntaryPlanWaiverRequestTypes[{ Machine["TypeCaregiverIndex"]}].DurationInWeeksCode", blankItemText: "select", lookupName: LookupTable.WaiverWeeksAvailable)
+			@TextBox(dataSource: $"Form.VoluntaryPlanWaiverRequestTypes[{ Machine["TypeCaregiverIndex"]}].PercentagePaid", minValue: 0, maxValue: 100, formatter: Formatter.Percent, formatDecimals: 2)
+		}
+		@using (Panel(panelLayout: PanelLayout.Grid, defaultLabelColumns: 0, defaultControlColumns: 12, borderVisible: false))
+		{
+			<h6>Supporting Documentation</h6>
+			<p>
+				Please upload the leave policies showing evidence of the selection(s) above
+			</p>
+			@using (DataTable(dataSource: "Form.FormAttachments", searchable: false, dataTableHeight: DataTableHeight.Full, recordCountInfo: false))
+			{
+				@DataTableColumn(columnName: "Document Name", dataSource: "Document.DocumentName", width: 100)
+				@DataTableColumn(columnName: "Document Description", dataSource: "Document.DocumentDescription", width: 200, canWrap: true, columnAlign: ColumnAlign.Left)
+				@DataTableColumn(columnName: "View", text: "<a href='https://www.google.com/' target='_blank'>View</a>", width: 3)
+				@DataTableColumn(columnName: "Delete", width: 3, transition: "Delete", targetDataSource: "FormAttachment")
+			}
+			@Button(text: "Upload Document", transition: "Upload")
+		}
+		@using (Panel(panelLayout: PanelLayout.Inline, borderVisible: false))
+		{
+			<h6>Acknowledgement</h6>
+			@CheckBox(caption: "I acknowledge that submittions of this waiver application will cost my company $250, and is non-refundable regardless of the application outcome. <span><a href='https://www.google.com/' target='_blank'>Term & Condition</a></span>", dataSource: "Form.IsVoluntaryPlanWaiverRequestAcknowledged")
+			<br />
+			@Button(text: "Save As Draft", transition: "Submit")
+			@Button(text: "Cancel", transition: "Cancel")
+			@Button(text: "Progress To Payment Screen", transition: "Submit")
+		}
+	}
+}

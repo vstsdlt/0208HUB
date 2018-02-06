@@ -1,0 +1,63 @@
+﻿@using (Form())
+{
+
+    @using (Panel(headingText: "Formatters", panelLayout: PanelLayout.Grid))
+    {
+        @TextBox(labelText: "Currency", dataSource: "ValidateFormatterCurrency", formatter: Formatter.Currency)<br/>
+        @TextBox(labelText: "Date", dataSource: "ValidateFormatterDate", formatter: Formatter.Date)<br/>
+        @RadioButtonGroup(labelText: "Test", lookupName: LookupTable.AgencyEftStatus)
+        @TextBox(labelText: "Date/Time", dataSource: "ValidateFormatterDateTime", formatter: Formatter.DateTime)<br/>
+        @TextBox(labelText: "Email", dataSource: "ValidateFormatterEmail", formatter: Formatter.Email)<br/>
+        @TextBox(labelText: "Fein", dataSource: "ValidateFormatterFein", formatter: Formatter.Fein)<br />
+        @TextBox(labelText: "ITIN", dataSource: "ValidateFormatterItin", formatter: Formatter.Itin)<br />
+        @TextBox(labelText: "Number", dataSource: "ValidateFormatterNumber", formatter: Formatter.Number)<br/>
+        @TextBox(labelText: "Percent", dataSource: "ValidateFormatterPercent", formatter: Formatter.Percent)<br/>
+        @TextBox(labelText: "Phone", dataSource: "ValidateFormatterPhone", formatter: Formatter.Phone)<br/>
+        @TextBox(labelText: "Postal", dataSource: "ValidateFormatterPostal", formatter: Formatter.Postal)<br/>
+        @TextBox(labelText: "SSN", dataSource: "ValidateFormatterSsn", formatter: Formatter.Ssn)<br/>
+        @TextBox(labelText: "SSN or ITIN", dataSource: "ValidateFormatterSsnOrItin", formatter: Formatter.SsnOrItin)<br />
+        @TextBox(labelText: "Text Alpha", dataSource: "ValidateFormatterTextAlpha", formatter: Formatter.TextAlpha, looseValidation: true)<br/>
+        @TextBox(labelText: "Text Alpha/Numeric", dataSource: "ValidateFormatterTextAlphaNumeric", formatter: Formatter.TextAlphaNumeric, looseValidation: true)<br/>
+        @TextBox(labelText: "Text Numeric", dataSource: "ValidateFormatterTextNumeric", formatter: Formatter.TextNumeric)<br/>
+        @TextBox(labelText: "Time", dataSource: "ValidateFormatterTime", formatter: Formatter.Time)
+    }
+
+    @using (Panel(headingText: "Allowed", panelLayout: PanelLayout.Grid))
+    {
+        @TextBox(labelText: "Allowed (never)", dataSource: "ValidateAllowedTextBox", allowed: "false")<br />
+        @TextBox(labelText: "Allowed (currency is $1)", dataSource: "ValidateAllowedTextBoxDependent", allowed: "ValidateFormatterCurrency = '1'")<br />
+    }
+
+    @using (Panel(headingText: "Required", panelLayout: PanelLayout.Grid))
+    {
+        @TextBox(labelText: "Required (always)", dataSource: "ValidateRequiredTextBox", required: "true")<br />
+        @TextBox(labelText: "Required (curreny is $1)", dataSource: "ValidateRequiredTextBoxDependent", required: "ValidateFormatterCurrency = '1'")<br />
+    }
+
+    @using (Panel(headingText: "Min/Max Length", panelLayout: PanelLayout.Grid))
+    {
+        @TextBox(labelText: "String (3..)", dataSource: "ValidateMaxLengthInt", minLength: 3)<br />
+        @TextBox(labelText: "String (..5)", dataSource: "ValidateMaxLengthInt", maxLength: 5)<br />
+        @TextBox(labelText: "String (3..5)", dataSource: "ValidateMaxLengthInt", minLength: 3, maxLength: 5)<br />
+    }
+
+    @using (Panel(headingText: "Min/Max Value", panelLayout: PanelLayout.Grid))
+    {
+        @TextBox(labelText: "Number (50..)", dataSource: "ValidateMaxValueInt", formatter: Formatter.Number,  minValue: 50)<br />
+        @TextBox(labelText: "Date (1/1/2000..)", dataSource: "ValidateMaxValueDate", formatter: Formatter.Date, minValue: new DateTime(2000,1,1))<br />
+        @TextBox(labelText: "Number (..100)", dataSource: "ValidateMinValueInt", formatter: Formatter.Number, maxValue: 100)<br />
+        @TextBox(labelText: "Date (..1/1/2015)", dataSource: "ValidateMinValueDate", formatter: Formatter.Date, maxValue: new DateTime(2015, 1, 1))<br />
+        @TextBox(labelText: "Number (50..100)", dataSource: "ValidateMinMaxValueInt", formatter: Formatter.Number, minValue: 50, maxValue: 100)<br />
+        @TextBox(labelText: "Date (1/1/2000..1/1/2015)", dataSource: "ValidateMinMaxValueDate", formatter: Formatter.Date, minValue: new DateTime(2000, 1, 1), maxValue: new DateTime(2015, 1, 1))<br />
+    }
+
+    <br/>
+    <label>Ignore client validation: <input type="checkbox" name="ignoreClientValidate" onclick="if ($(this).is(':checked')) { $('button[name=\'refresh\']').attr('formnovalidate', 'formnovalidate').removeClass('disabled').removeAttr('disabled'); } else { $('button[name=\'refresh\']').removeAttr('formnovalidate'); }" /></label><br/>
+    <hr />
+    @Button(transition: "ServiceError", name: "service: error")
+    @Button(transition: "ServiceWarning", name: "service: warning")
+    @Button(transition: "ServiceInformation", name: "service: information")
+    <hr />
+    @Button(transition: "Refresh", name: "refresh")
+    @Button(transition: "Close")
+}

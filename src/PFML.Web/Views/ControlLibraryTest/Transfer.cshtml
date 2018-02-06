@@ -1,0 +1,10 @@
+﻿@using (Form())
+{
+    @Button(transition: "Transfer")
+    @if (FACTS.Framework.Web.Context.MachineStack.Count > 1)
+    {
+        @Button(transition: "End")
+    }
+    <br/>
+    @Button(transition: "Close")
+}

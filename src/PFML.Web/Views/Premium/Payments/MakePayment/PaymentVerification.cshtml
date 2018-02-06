@@ -1,0 +1,28 @@
+﻿@Html.Partial("EmployerHeaderWizard", Machine["ListSection"], new ViewDataDictionary(ViewData) { { "current", (LookupCode)Machine["CurrentSection"] }, { "showHeader", (bool)Machine["ShowHeader"] } })
+
+@using (Form())
+{
+    @using (Panel(headingText: "Payment Verification", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        @Data(labelText: "Due Dates:", dataSource: "PaymentDueDates", cssClass: "bold")
+        @Data(labelText: "Prepayment Due Dates:", dataSource: "PrepaymentDueDates", cssClass: "bold")
+        @Data()
+        <br />
+        <p class="paragraphIndent">If payment is not submitted by the dates indicated, you will be assessed interest and / or penalties.</p>
+        @Data(labelText: "Total Payment Amount:", dataSource: "EnteredPaymentAmount", cssClass: "bold", formatter: Formatter.Currency)
+        @Data(labelText: "Routing Transit Number:", dataSource: "MaskedTransitNumber", cssClass: "bold")
+        @Data(labelText: "Bank Account Number:", dataSource: "MaskedAccountNumber", cssClass: "bold")
+        @Data(labelText: "Account Type:", dataSource: "AccountType", cssClass: "bold")
+        @Data(labelText: "Payment Effective Date:", dataSource: "PaymentEffectiveDate", cssClass: "bold", formatter: Formatter.Date)
+        @Data(labelText: "Save Bank Information:", dataSource: "SaveBankInformationText", cssClass: "bold")
+        @Data(labelText: "", dataSource: "PmtVerificationMsg", labelColumns: 0, controlColumns: 10)
+        @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+        {
+            <br />
+            @Button(transition: "Previous")
+            @Button(transition: "Cancel")
+            @Button(transition: "Submit")
+        }
+    }
+}
+

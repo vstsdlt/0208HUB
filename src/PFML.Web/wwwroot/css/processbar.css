@@ -1,0 +1,129 @@
+.processbar {
+	background: none; list-style: none; padding: 0px; border-radius: 4px; overflow: hidden; margin-top: 20px; margin-bottom: 20px;
+}
+.processbar > li {
+	width: 1%; vertical-align: middle; display: table-cell;
+}
+.processbar .processbaritem {
+	vertical-align: middle; display: table-cell; min-height: 3.4em;
+}
+.processbar .processbaritem .itemnumber {
+	line-height: 1.8em; padding-right: 0.5em; vertical-align: middle; display: table-cell;
+}
+.processbar .processbaritem .itemdescription {
+	text-align: left; vertical-align: middle; display: table-cell;
+}
+.processbar .processbaritem .itemdescription span {
+	overflow: hidden; padding-right: 1em; margin-right: -1em; display: block; position: relative; -ms-text-overflow: ellipsis; max-height: 2.8em; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+.processbar > li + li::before {
+	padding: 0px;
+}
+.processbar li a {
+	padding: 0.7em 0px 0.7em 25%; width: calc( 100% - 0px ); height: 4.3em; text-align: center; color: rgba(80, 80, 80, 0.7); text-transform: capitalize; text-decoration: none; vertical-align: middle; display: table; position: relative; background-color: hsla(0, 0%, 83%, 1);
+}
+.processbar li a span {
+	vertical-align: middle;
+}
+.processbar li a span.circle {
+	background: white; padding: 0.3em 0.6em; border-radius: 50%; text-align: center; text-shadow-length: 4px;
+}
+.processbar li.completed a span.glyphicon {
+	padding: 0.4em;
+}
+.processbar li.completed a {
+	color: black;
+}
+.processbar .processbaritem .itemnumber span.checked {
+	display: none;
+}
+.processbar li.completed .processbaritem .itemnumber span.circle {
+	display: none;
+}
+.processbar li.completed .processbaritem .itemnumber span.checked {
+	color: green; display: inline-block;
+}
+.processbar li.active a span.circle {
+	color: black;
+}
+    .processbar li.active a {
+        background: rgba(12, 39, 72, 0.98);
+        color: rgb(255, 255, 255) !important;
+    }
+        .processbar li.active a::after {
+            border-left-color: rgba(12, 39, 72, 0.98);
+            border-left-width: 30px;
+            border-left-style: solid;
+        }
+.processbar li:first-child a {
+	padding-left: 12.5%;
+}
+.processbar li:last-of-type a {
+	width: calc( 100% - 0px );
+}
+.processbar li a::before {
+	left: 99%; top: 50%; width: 0px; height: 0px; margin-top: -50px; margin-left: 4%; border-top-color: transparent; border-bottom-color: transparent; border-left-color: white; border-top-width: 50px; border-bottom-width: 50px; border-left-width: 30px; border-top-style: solid; border-bottom-style: solid; border-left-style: solid; display: block; position: absolute; z-index: 1; content: " ";
+}
+.processbar li a::after {
+	left: 100%; top: 50%; width: 0px; height: 0px; margin-top: -50px; border-top-color: transparent; border-bottom-color: transparent; border-left-color: hsla(0, 0%, 83%, 1); border-top-width: 50px; border-bottom-width: 50px; border-left-width: 30px; border-top-style: solid; border-bottom-style: solid; border-left-style: solid; display: block; position: absolute; z-index: 2; content: " ";
+}
+@media all and (max-width:992px)
+{
+.processbar li a {
+	height: auto;
+}
+.processbar .processbaritem .itemdescription {
+	display: none;
+}
+.processbar .processbaritem .itemnumber {
+	padding-right: 0px; display: inline-block;
+}
+.processbar .processbaritem {
+	width: 100%; min-height: 0px;
+}
+.processbar li a {
+	width: calc( 90% - 5% );
+}
+.processbar li:last-of-type a {
+	padding-left: 12.5%;
+}
+.processbar li:last-of-type a .processbaritem .itemnumber {
+	padding-right: 0.5em;
+}
+.processbar li a::before {
+	left: 100%; margin-left: 10%; z-index: 1;
+}
+}
+@media all and (max-width:453px)
+{
+.processbar li {
+	display: none;
+}
+.processbar li.active {
+	display: table-cell;
+}
+.processbar .processbaritem .itemdescription {
+	display: table-cell;
+}
+.processbar .processbaritem .itemnumber {
+	display: table-cell;
+}
+.processbar .processbaritem .itemnumber {
+	padding-right: 0.5em;
+}
+.processbar li:first-child a::before {
+	display: none;
+}
+.processbar li a::before {
+	left: -14%;
+}
+.processbar li a::after {
+	left: 98%;
+}
+.processbar li a {
+	width: calc( 98% - 6.5% );
+}
+.processbar li.active a {
+	padding: 10px 0px 10px 45px; z-index: 1;
+}
+}

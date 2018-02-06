@@ -1,0 +1,54 @@
+﻿@using FACTS.Framework.Support
+@using (Form())
+{
+    @using (Panel(defaultLabelColumns: 0, defaultControlColumns: 12, headingText: "Paper Check Payment"))
+    {
+        <p>If payment is not submitted by the date indicated, you will be subject to interest or penalties.</p>
+        @using (Panel(panelLayout: PanelLayout.Grid, defaultLabelColumns: 7, defaultControlColumns: 5, borderVisible: false))
+        {
+            @using (Panel(borderVisible: false))
+            {
+                @Data(labelText: "Payment Due Dates:", dataSource: "PaymentDueDates", labelColumns: 4, controlColumns: 4, cssClass: "bold")
+                @Data(labelText: "Prepayment Due Date", dataSource: "PrepaymentDueDates", labelColumns: 4, controlColumns: 4, cssClass: "bold")
+                @Data(labelText: "Payment Amount", labelColumns: 4, controlColumns: 4, dataSource: "PaymentAmountPaperVoucher", formatter: Formatter.Currency, cssClass: "bold")
+                @Data(labelText: "Employer Account Number", labelColumns: 4, controlColumns: 4, dataSource: "EmployerIDPaperVoucher", cssClass: "bold")
+                @Data(labelText: "Make Checks Payable To", labelColumns: 4, controlColumns: 4, dataSource: "ChecksPayableAt", cssClass: "bold")
+                @Data(labelText: "Mailing Address", labelColumns: 4, controlColumns: 4, dataSource: "MailingAddress", cssClass: "bold")
+            }
+        }
+        @using (Panel(borderVisible: false))
+        {
+            @BulletedList(items: new List<HtmlValueText>
+            {
+new HtmlValueText(null,"Paper check payments will be posted to your account when received by the check processing unit."),
+new HtmlValueText(null,"All paper checks must be submitted with a payment voucher in order for your account to be credited in a timely manner."),
+new HtmlValueText(null,"Include one voucher and one check per envelope."),
+new HtmlValueText(null,"Staple check to voucher."),
+new HtmlValueText(null,"Do not include additional documents with your payment."),
+new HtmlValueText(null,"DO NOT SEND CASH."),
+new HtmlValueText(null,"Mail the payment no later than five days prior to the due date to ensure timely receipt.")
+}, cssClass: "bold")
+        }
+        <br />
+        <br />
+        <p>
+            The payment you are making by check authorizes the State Department Workforce Solutions to use the information from your check to make a one-time electronic fund transfer from your account or to process the payment as a check transaction.
+        </p>
+        <br />
+        @using (Panel(borderVisible: false))
+        {
+            @Data(text: "Print Name ______________________", labelColumns: 2, controlColumns: 3)
+            @Data(text: "Date  ______________________", labelColumns: 4, controlColumns: 3)
+            @Data(text: "Signature  ______________________", labelColumns: 2, controlColumns: 3)
+            @Data(text: "Phone ______________________", labelColumns: 4, controlColumns: 3)
+        }
+        @using (Panel(panelLayout: PanelLayout.Inline, cssClass: "text-center", borderVisible: false))
+        {
+            <br />
+            @Button(transition: "Close")
+            <div class="form-group">
+                <button id="btnPrint" value="Print" onclick="javascript:window.print()" class="btn btn-default">Print</button>
+            </div>
+        }
+    }
+}

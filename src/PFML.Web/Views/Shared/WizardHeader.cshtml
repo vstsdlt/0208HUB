@@ -1,0 +1,53 @@
+﻿
+@using (Form())
+{
+
+    @if ((bool)ViewData["showHeader"])
+    {
+        int j = 1;
+        bool completed = false;
+
+        <UL class="processbar">
+            @foreach (var item in @Model)
+            {
+                var custclass = string.Empty;
+                if (ViewData["current"]!=null)
+                {
+
+                    if (((FACTS.Framework.Support.HtmlValueText)item).Text.ToString() == ((FACTS.Framework.Lookup.LookupCode)@ViewData["current"]).Display.ToString())
+                    {
+                        custclass = "active";
+                        completed = true;
+                    }
+                    else
+                    {
+                        if (!completed)
+                        {
+                            custclass = "completed";
+                        }
+                    }
+                }
+                <LI class=@custclass>
+                    <A>
+                        <DIV class="processbaritem">
+                            <DIV class="itemnumber">
+                                <SPAN class="glyphicon glyphicon-ok circle checked"></SPAN> <SPAN title="" class="circle">@j</SPAN>
+                            </DIV>
+                            <DIV class="itemdescription">
+                                <SPAN title="">
+                                    @(((FACTS.Framework.Support.HtmlValueText)item).Text)
+                                </SPAN>
+                            </DIV>
+                        </DIV>
+                    </A>
+                </LI>
+                j = j + 1;
+            }
+
+        </UL>
+
+    }
+
+
+}
+

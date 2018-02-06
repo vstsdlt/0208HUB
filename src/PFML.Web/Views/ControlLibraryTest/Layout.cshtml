@@ -1,0 +1,86 @@
+﻿@using (Form())
+{
+    @using (Panel(headingText: "Grid Layout - Controls", panelLayout: PanelLayout.Grid))
+    {
+        @BulletedList(labelText: "BulletedList", dataSource: "LayoutBulletedListData")
+        @CheckBox(labelText: "CheckBox")
+        @RadioButton(labelText: "RadioButton")
+        @TextBox(labelText: "TextBox")
+        @TextBox(labelText: "TextArea", multiLine: true)
+    }
+
+    @using (Panel(headingText: "Grid Layout - Colums", panelLayout: PanelLayout.Grid))
+    {
+        @for (int i = 1; i <= 11; i++)
+        {
+            @TextBox(labelText: $"{i}x{12 - i}", labelColumns: i, controlColumns: 12 - i);
+        }
+    }
+
+    @using (Panel(headingText: "Grid Layout - Default Columns", panelLayout: PanelLayout.Grid))
+    {
+        @CheckBox(labelText: "Default LabelColumns x Default ControlColumns")
+        @RadioButton(labelText: "Default LabelColumns x Default ControlColumns")
+        @TextBox(labelText: "Default LabelColumns x Default ControlColumns")
+    }
+
+    @using (Panel(headingText: "Grid Layout - Panel-defined Columns", panelLayout: PanelLayout.Grid, defaultLabelColumns: 7, defaultControlColumns: 5))
+    {
+        @CheckBox(labelText: "Panel.DefaultLabelColumns x Panel.DefaultControlColumns")
+        @RadioButton(labelText: "Panel.DefaultLabelColumns x Panel.DefaultControlColumns")
+        @TextBox(labelText: "Panel.DefaultLabelColumns x Panel.DefaultControlColumns")
+    }
+
+    @using (Panel(headingText: "Grid Layout - Embedded Panel", panelLayout: PanelLayout.Grid))
+    {
+        @TextBox(labelText: "TextBox")
+        @using (Panel(labelText: "Embedded Panel", headingText: "Embedded Panel", panelLayout: PanelLayout.Grid))
+        {
+            @TextBox(labelText: "TextBox")
+            @TextBox(labelText: "TextBox2")
+            @TextBox(labelText: "TextBox3")
+            @using (Panel(labelText: "Embedded Panel", headingText: "Sub-Embedded Panel", panelLayout: PanelLayout.Grid))
+            {
+                @TextBox(labelText: "TextBox")
+                @TextBox(labelText: "TextBox2")
+                @TextBox(labelText: "TextBox3")
+            }
+        }
+    }
+
+    <hr/>
+    
+    @using (Panel(headingText: "Inline Layout", panelLayout: PanelLayout.Inline))
+    {
+        @BulletedList(labelText: "BulletedList", dataSource: "LayoutBulletedListData")
+        @CheckBox(labelText: "CheckBox")
+        @RadioButton(labelText: "RadioButton")
+        @TextBox(labelText: "TextBox")
+    }
+
+    @using (Panel(headingText: "Inline Layout - Embedded Panel", panelLayout: PanelLayout.Inline))
+    {
+        @TextBox(labelText: "TextBox")
+        @using (Panel(labelText: "Embedded Panel", headingText: "Embedded Panel", panelLayout: PanelLayout.Inline))
+        {
+            @TextBox(labelText: "TextBox")
+            @using (Panel(labelText: "Embedded Panel", headingText: "Sub-Embedded Panel", panelLayout: PanelLayout.Inline))
+            {
+                @TextBox(labelText: "TextBox")
+            }
+        }
+    }
+
+    <hr />
+
+    @using (Panel(headingText: "Stacked Layout", panelLayout: PanelLayout.Stacked))
+    {
+        @BulletedList(labelText: "BulletedList", dataSource: "LayoutBulletedListData")
+        @CheckBox(labelText: "CheckBox")
+        @RadioButton(labelText: "RadioButton")
+        @TextBox(labelText: "TextBox")
+    }
+
+    <br />
+    @Button(transition: "Close")
+}

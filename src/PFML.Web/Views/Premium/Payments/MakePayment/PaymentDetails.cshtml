@@ -1,0 +1,32 @@
+﻿@Html.Partial("EmployerHeaderWizard", Machine["ListSection"], new ViewDataDictionary(ViewData) { { "current", (LookupCode)Machine["CurrentSection"] }, { "showHeader", (bool)Machine["ShowHeader"] } })
+
+@using (Form())
+{
+    @using (Panel(headingText: "Payment Details", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        @Data(labelText: "Payment Due Dates:", dataSource: "PaymentDueDates", cssClass: "bold")
+        @Data(labelColumns: 4, controlColumns: 1)
+        <br />
+        <p class="paragraphIndent">If payment is not submitted by the dates indicated, you will be assessed interest and / or penalties.</p>
+        @Data(labelText: "Amount Due:", dataSource: "AmountDue", formatter: Formatter.Currency, cssClass: "bold")
+        if ((decimal)Machine["PrePaymentAmount"] > 0)
+        {
+            @Data(labelText: "Total:", dataSource: "TotalAmount", formatter: Formatter.Currency, cssClass: "bold")
+        }
+        @Data(labelText: "Payment Amount :", dataSource: "EnteredPaymentAmount", formatter: Formatter.Currency, cssClass: "bold")
+        @TextBox(labelText: "Routing Transit Number :", dataSource: "RoutTranNumber", required: "true", maxLength: 9, minLength: 9, formatter: Formatter.TextNumeric)
+        @TextBox(labelText: "Bank Account Number :", dataSource: "BankAccNumber", required: "true", maxLength: 17, formatter: Formatter.TextNumeric)
+        @SelectBox(labelText: "Account Type :", required: "true", dataSource: "AccountTypeDDL", lookupName: LookupTable.BankAccountType, blankItem: false)
+        @CheckBox(caption: "Save Bank Information", labelColumns: 0, controlColumns: 2, dataSource: "SaveBankInformation")
+        @TextBox(labelText: "Payment Effective Date :", dataSource: "PaymentEffectiveDate", minValue: DateTime.Now.ToShortDateString(), formatter: Formatter.Date, required: "true")
+        @Data(labelColumns: 11, controlColumns: 1)
+        <p class="paragraphIndent">Your Routing Transit Number and Bank Account Number are located on the paper checks provided by your bank.</p>
+        @Data(labelColumns: 11, controlColumns: 1)
+        @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+        {
+            <br />
+            @Button(transition: "Previous", text: "Previous")
+            @Button(transition: "Next", text: "Next")
+        }
+    }
+}

@@ -1,0 +1,30 @@
+﻿@Html.Partial("WizardHeader", Machine["ListSection"], new ViewDataDictionary(this.ViewData) { { "current", Machine["CurrentSection"] }, { "showHeader", Machine["ShowHeader"] } })
+
+@using (Form())
+{
+    @using (Panel(headingText: "Employer Identification Information", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        <p>Provide the mailing address and other information about this employer:</p>
+        @SelectBox(labelText: "Legal Entity Type:", lookupName: LookupTable.LegalEntity, dataSource: "EmployerRegistration.EmployerDto.EntityTypeCode", required: "true", blankItemText: "Select One")
+        @TextBox(labelText: "Legal Name:", dataSource: "EmployerRegistration.EmployerDto.EntityName", required: "true", looseValidation: true)
+        @TextBox(labelText: "Trade Name/Doing Business As (DBA) Name:", dataSource: "EmployerRegistration.EmployerUnitDto.DoingBusinessAsName", looseValidation: true)
+        @TextBox(labelText: "Mailing Address Line 1:", formatter: Formatter.TextAlphaNumeric, dataSource: "EntityAddress.Address.AddressLine1", required: "true", looseValidation: true)
+        @TextBox(labelText: "Mailing Address Line 2:", formatter: Formatter.TextAlphaNumeric, dataSource: "EntityAddress.Address.AddressLine2", looseValidation: true)
+        @TextBox(labelText: "City:", dataSource: "EntityAddress.Address.City", formatter: Formatter.TextAlpha, required: "true", looseValidation: true)
+        @SelectBox(labelText: "State", lookupName: LookupTable.StatePrvnc, lookupFormat: "{Code} - {Display}", dataSource: "EntityAddress.Address.StateCode")
+        @TextBox(labelText: "ZIP/Postal Code:", formatter: Formatter.Postal, dataSource: "EntityAddress.Address.Zip", required: "true")
+        @SelectBox(labelText: "Country:", lookupName: LookupTable.Country, lookupFormat: "{Code} - {Display}", dataSource: "EntityAddress.Address.CountryCode", required: "true")
+        @TextBox(labelText: "Business Phone Number:", dataSource: "EntityAddress.Address.PhoneNumber", formatter: Formatter.Phone, required: "true")
+        @TextBox(labelText: "Business Fax Number:", formatter: Formatter.TextNumeric, dataSource: "EntityAddress.Address.FaxNumber")
+        @TextBox(labelText: "Business E-Mail Address:", dataSource: "EntityAddress.Address.Email", formatter: Formatter.Email, required: "true")
+        @TextBox(labelText: "Re-enter Business E-Mail Address:", dataSource: "LegalAddrReEmail", formatter: Formatter.Email, required: "EntityAddress.Address.Email !=null")
+        @TextBox(labelText: "Business Web Address:", dataSource: "EntityAddress.Address.BusinessWebAddress")
+        @SelectBox(labelText: "Communication Method:", lookupName: LookupTable.CommunicationMethod, dataSource: "EmployerRegistration.EmployerDto.EmployerPreference.CorrespondanceTypeCode", required: "true", blankItem: false)
+    }
+
+    @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+    {
+        @Button(transition: "Previous")
+        @Button(transition: "Next")
+    }
+}

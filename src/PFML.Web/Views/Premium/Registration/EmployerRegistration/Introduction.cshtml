@@ -1,0 +1,44 @@
+﻿@Html.Partial("WizardHeader", Machine["ListSection"], new ViewDataDictionary(this.ViewData) { { "current", Machine["CurrentSection"] }, { "showHeader", Machine["ShowHeader"] } })
+
+@using (Form())
+{
+    @using (Panel(headingText: "Welcome to PFML Employer Registration"))
+    {
+        <p>Each employing unit or business entity performing services in State must register with this agency. The information gathered during this registration process will determine if you are required to make contributions under the Paid Family and Medical Leave (PFML) Law of State. Upon successful registration, you will be given an Employer Account Number (EAN) and provided access to the PFML Premium system where you will be able to report wages paid, pay any contributions due and manage your account.</p>
+    }
+
+    @using (Panel(headingText: "Necessary Registration Information"))
+    {
+        <p>For successful completion of this registration, you will need to provide the following information:</p>
+        <ul>
+            <li>Type of legal entity (sole proprietor, partnership, LLC, corporation, etc)</li>
+            <li>Trade Name/Doing Business As (DBA) Name</li>
+            <li>Federal Employer Identification Number (FEIN)</li>
+            <li>Date employees first performed services in State</li>
+            <li>Date employer first paid wages to those employees in State</li>
+            <li>Principal business activity or description of services performed in State</li>
+            <li>Number of employees currently on payroll</li>
+            <li>Quarterly gross summary of wages paid to date</li>
+        </ul>
+    }
+
+    @using (Panel(headingText: "Notification", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        <p>
+            You will be asked to certify that all information provided in this filing is complete, true and accurate. State law provides for civil fines and criminal penalties for misrepresentation, evasion, willful nondisclosure, and failure or refusal to furnish reports or requested information to this agency.
+            <br />
+            <br />
+            To begin registration, provide the following information:
+        </p>
+        @RadioButtonGroup(labelText: "Is the employer registering currently paying wages for services performed?", lookupName: LookupTable.BoolYesNo, lookupSort: "{DisplaySortOrder}", dataSource: "EmployerRegistration.EmployerDto.IsServiceBegin", required: "true")
+        @TextBox(labelText: "If yes, how many individuals are being paid for services performed in State?", dataSource: "EmployerRegistration.EmployerDto.NoOfEmployeesPaid", formatter: Formatter.TextNumeric, required: "EmployerRegistration.EmployerDto.IsServiceBegin=='Y'")
+        @TextBox(labelText: "If yes, enter the date services were first performed for the employer in State?", formatter: Formatter.Date, placeholder: "mm/dd/yyyy", dataSource: "EmployerRegistration.EmployerDto.ServiceBeginDate", required: "EmployerRegistration.EmployerDto.IsServiceBegin=='Y'", maxValue: DateTime.Now.ToShortDateString())
+        @TextBox(labelText: "If yes, enter the date this employer first paid wages to those individuals performing services in State?", formatter: Formatter.Date, placeholder: "mm/dd/yyyy", dataSource: "EmployerRegistration.EmployerUnitDto.FirstWageDate", required: "EmployerRegistration.EmployerDto.IsServiceBegin=='Y'", maxValue: DateTime.Now.ToShortDateString())
+        @TextBox(labelText: "Enter this employer’s Federal Employer Identification Number(FEIN):", dataSource: "Fein", required: "true", maxLength: 9, minLength: 9)
+    }
+
+    @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+    {
+        @Button(transition: "Next")
+    }
+}

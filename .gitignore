@@ -286,3 +286,17 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+
+
+# FACTS.Next Specific
+![Ll]ookup.[Cc]ache
+!**/*.Web/Properties/launchSettings.json
+**/*.Framework.Web/Properties/launchSettings.json
+!**/*.Service/Properties/launchSettings.json
+**/*.Framework.Service/Properties/launchSettings.json
+/src/PFMLDb/dbo/Tables
+/src/PFML.Shared/ViewModels/Premium/Waiver/VPRequest/VPRequest.cs
+/New folder/PFML.BusinessLogic.Test
+/src/PFML.Web/Controllers/Premium/Payments
+/Test/PFML.BusinessLogic.Test
+/src/PFML.Web/DAC.exe

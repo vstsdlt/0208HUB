@@ -1,0 +1,37 @@
+﻿@using FACTS.Framework.Lookup;
+@Html.Partial("WizardHeader", Machine["ListSection"], new ViewDataDictionary(this.ViewData) { { "current", (LookupCode)Machine["CurrentSection"] }, { "showHeader", (bool)Machine["ShowHeader"] } })
+
+@using (Form())
+{
+        @using (Panel(headingText: "Reporting Information", defaultControlColumns: 4, defaultLabelColumns: 4))
+        {
+            @Data(labelText: "Employment and Wages Paid for the Quarter:", dataSource: "WageUnitDetail.ReportingQuarter", lookupName: LookupTable.Quarter, cssClass: "bold")
+            @Data(labelText: "Year:", dataSource: "WageUnitDetail.ReportingYear", cssClass: "bold")
+            @Data(labelText: "Submission Type:", dataSource: "WageUnitDetail.AdjReasonDisplay", formatter: Formatter.Currency, lookupName: LookupTable.WageDetailAdjReasonCode, cssClass: "bold")
+        }
+        @using (Panel(headingText: "Employment and Wage Detail Report Summary", defaultControlColumns: 4, defaultLabelColumns: 4))
+        {
+            @Data(labelText: "Number of Records:", dataSource: "WageUnitDetail.NumberofRecords", formatter: Formatter.Number, cssClass: "bold")
+            @Data(labelText: "Total Gross Wages:", dataSource: "WageUnitDetail.GrossWages", formatter: Formatter.Currency, cssClass: "bold")
+        }
+
+        @using (Panel(headingText: "Summary of Units Reported", panelLayout: PanelLayout.Stacked))
+        {
+            @using (DataTable(dataSource: "WageUnitDetail.ListWageEmployerUnitSummary", searchable: false, dataTableHeight: DataTableHeight.Full, recordCountInfo: false, allowNewRow: false, showDeleteRow: false))
+            {
+                @DataTableColumn(columnName: "Business Name", dataSource: "EntityName")
+                @DataTableColumn(columnName: "Number of Records", dataSource: "NumberofRecords")
+                @DataTableColumn(columnName: "Total Gross Wages", dataSource: "GrossWage", formatter: Formatter.Currency)
+            }
+            <br />
+            <ul>
+                <li>To continue processing your Employment and Quarterly Wage Detail records, select '“Next".</li>
+            </ul>
+        }
+
+        @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+        {
+            @Button(transition: "Previous")
+            @Button(transition: "Next")
+        }
+}

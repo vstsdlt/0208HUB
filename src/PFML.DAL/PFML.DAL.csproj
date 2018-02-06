@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PFML.Shared\PFML.Shared.csproj" />
+    <PackageReference Include="EntityFramework" Version="6.1.3" />
+    <PackageReference Include="FACTS.Framework.Analysis" Version="2.0.6609.19833" />
+    <PackageReference Include="FACTS.Framework.Common" Version="2.0.6609.19833" />
+    <PackageReference Include="FACTS.Framework.Service" Version="2.0.6609.19833" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Model\DbEntities\" />
+  </ItemGroup>
+
+</Project>

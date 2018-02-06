@@ -1,0 +1,45 @@
+﻿@Html.Partial("WizardHeader", Machine["ListSection"], new ViewDataDictionary(this.ViewData) { { "current", Machine["CurrentSection"] }, { "showHeader", Machine["ShowHeader"] } })
+
+@using (Form())
+{
+    @using (Panel(headingText: "Enter Address - Physical Location", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        <p>Enter the State physical location address for this employer. This address cannot be a Post Office box or private mail box. DO NOT: enter a client site, other temporary job site, or employee home address.</p>
+        @SelectBox(labelText: "Same as:", lookupName: LookupTable.AddressType, lookupFilter: "code='MAIL'", dataSource: "SameAsPhyAddr", blankItemText: "Select One")
+        @RadioButtonGroup(labelText: "Do you have physical location in Washington?", lookupName: LookupTable.BoolYesNo, lookupSort: "{DisplaySortOrder}", dataSource: "EmployerRegistration.EmployerDto.HasPhysicalLocation", required: "true")
+        @RadioButtonGroup(labelText: "Is this employer's employees telecommuters or do they work out of their homes?", lookupName: LookupTable.BoolYesNo, lookupSort: "{DisplaySortOrder}", dataSource: "EmployerRegistration.EmployerDto.HasTelecommuter", required: "true")
+
+        @using (Panel(borderVisible: false, controlColumns: 12, labelColumns: 0, defaultControlColumns: 4, defaultLabelColumns: 4))
+        {
+            @TextBox(labelText: "Address Line 1:", formatter: Formatter.TextAlphaNumeric, dataSource: "PhysicalAddress.Address.AddressLine1", looseValidation: true, required: "SameAsPhyAddr != 'MAIL' && EmployerRegistration.EmployerDto.HasPhysicalLocation='Y'", securityFilter: "SameAsPhyAddr != 'MAIL'")
+            @TextBox(labelText: "Address Line 2:", formatter: Formatter.TextAlphaNumeric, dataSource: "PhysicalAddress.Address.AddressLine2", looseValidation: true, securityFilter: "SameAsPhyAddr != 'MAIL'")
+            @TextBox(labelText: "City:", formatter: Formatter.TextAlpha, dataSource: "PhysicalAddress.Address.City", looseValidation: true, required: "SameAsPhyAddr != 'MAIL' && EmployerRegistration.EmployerDto.HasPhysicalLocation='Y'", securityFilter: "SameAsPhyAddr != 'MAIL'")
+            @Data(labelText: "State:", lookupName: LookupTable.StatePrvnc, lookupFormat: "{Code} - {Display}", dataSource: "PhysicalAddress.Address.StateCode", securityFilter: "SameAsPhyAddr != 'MAIL'")
+            @TextBox(labelText: "ZIP/Postal Code:", formatter: Formatter.Postal, dataSource: "PhysicalAddress.Address.Zip", required: "SameAsPhyAddr != 'MAIL' && EmployerRegistration.EmployerDto.HasPhysicalLocation='Y'", securityFilter: "SameAsPhyAddr != 'MAIL'")
+            @Data(labelText: "Country:", lookupName: LookupTable.Country, lookupFormat: "{Code} - {Display}", dataSource: "PhysicalAddress.Address.CountryCode", securityFilter: "SameAsPhyAddr != 'MAIL'")
+            @TextBox(labelText: "Phone Number:", formatter: Formatter.Phone, dataSource: "PhysicalAddress.Address.PhoneNumber", required: "SameAsPhyAddr != 'MAIL' && EmployerRegistration.EmployerDto.HasPhysicalLocation='Y'", securityFilter: "SameAsPhyAddr != 'MAIL'")
+            @TextBox(labelText: "Fax:", formatter: Formatter.TextNumeric, dataSource: "PhysicalAddress.Address.FaxNumber", securityFilter: "SameAsPhyAddr != 'MAIL'")
+            @TextBox(labelText: "E-Mail:", formatter: Formatter.Email, dataSource: "PhysicalAddress.Address.Email", securityFilter: "SameAsPhyAddr != 'MAIL'")
+            @TextBox(labelText: "Re-Enter E-Mail:", formatter: Formatter.Email, dataSource: "PhyAddrReEmail", securityFilter: "SameAsPhyAddr != 'MAIL'")
+        }
+
+        @using (Panel(borderVisible: false, controlColumns: 12, labelColumns: 0, defaultControlColumns: 4, defaultLabelColumns: 4, cssClass: "bold"))
+        {
+            @Data(labelText: "Address Line 1:", formatter: Formatter.TextAlphaNumeric, dataSource: "EntityAddress.Address.AddressLine1", looseValidation: true, securityFilter: "SameAsPhyAddr == 'MAIL'")
+            @Data(labelText: "Address Line 2:", formatter: Formatter.TextAlphaNumeric, dataSource: "EntityAddress.Address.AddressLine2", looseValidation: true, securityFilter: "SameAsPhyAddr == 'MAIL'")
+            @Data(labelText: "City:", formatter: Formatter.TextAlpha, dataSource: "EntityAddress.Address.City", looseValidation: true, securityFilter: "SameAsPhyAddr == 'MAIL'")
+            @Data(labelText: "State:", lookupName: LookupTable.StatePrvnc, dataSource: "EntityAddress.Address.StateCode", lookupFormat: "{Code} - {Display}", securityFilter: "SameAsPhyAddr == 'MAIL'")
+            @Data(labelText: "ZIP/Postal Code:", formatter: Formatter.Postal, dataSource: "EntityAddress.Address.Zip", securityFilter: "SameAsPhyAddr == 'MAIL'")
+            @Data(labelText: "Country:", lookupName: LookupTable.Country, dataSource: "EntityAddress.Address.CountryCode", lookupFormat: "{Code} - {Display}", securityFilter: "SameAsPhyAddr == 'MAIL'")
+            @Data(labelText: "Phone Number:", formatter: Formatter.Phone, dataSource: "EntityAddress.Address.PhoneNumber", securityFilter: "SameAsPhyAddr == 'MAIL'")
+            @Data(labelText: "Fax:", formatter: Formatter.TextNumeric, dataSource: "EntityAddress.Address.FaxNumber", securityFilter: "SameAsPhyAddr == 'MAIL'")
+            @Data(labelText: "E-Mail:", formatter: Formatter.Email, dataSource: "EntityAddress.Address.Email", securityFilter: "SameAsPhyAddr == 'MAIL'")
+        }
+    }
+
+    @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+    {
+        @Button(transition: "Previous")
+        @Button(transition: "Next")
+    }
+}

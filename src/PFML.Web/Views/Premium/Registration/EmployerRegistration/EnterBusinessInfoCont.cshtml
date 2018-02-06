@@ -1,0 +1,19 @@
+﻿@Html.Partial("WizardHeader", Machine["ListSection"], new ViewDataDictionary(this.ViewData) { { "current", Machine["CurrentSection"] }, { "showHeader", Machine["ShowHeader"] } })
+
+@using (Form())
+{
+    @using (Panel(headingText: "Enter Employer Business Information (cont.)", defaultControlColumns: 4, defaultLabelColumns: 4))
+    {
+        @RadioButtonGroup(labelText: "Is this employer a non-profit organization (hospitals, schools, municipalities & counties) that holds an exemption from federal income taxes?", lookupName: LookupTable.BoolYesNo, lookupSort: "{DisplaySortOrder}", dataSource: "EmployerRegistration.EmployerDto.IsExemptUnderIRS501C3", required: "true")
+        @RadioButtonGroup(labelText: "If yes, is this employer applying for Reimbursable Cost Basis Financing under State law?", lookupName: LookupTable.BoolYesNo, lookupSort: "{DisplaySortOrder}", dataSource: "EmployerRegistration.EmployerDto.IsApplyingForREIM", required: "EmployerRegistration.EmployerDto.IsExemptUnderIRS501C3='Y'")
+        @RadioButtonGroup(labelText: "Did this employer acquire any or all of an employing enterprise currently registered with this agency? (To include assets, inventory and employees)?", lookupName: LookupTable.BoolYesNo, lookupSort: "{DisplaySortOrder}", dataSource: "EmployerRegistration.EmployerDto.IsAcquired", required: "true")
+        @RadioButtonGroup(labelText: "Is there more than one physical location in State?", lookupName: LookupTable.BoolYesNo,lookupSort:"{DisplaySortOrder}", dataSource: "EmployerRegistration.EmployerDto.IsPresentInMultipleLoc", required: "true")
+        @TextBox(labelText: "If yes, how many?",formatter:Formatter.Number, dataSource: "EmployerRegistration.EmployerDto.NoOfLocation", required: "EmployerRegistration.EmployerDto.IsPresentInMultipleLoc='Y'", minValue:2)
+    }
+
+    @using (Panel(borderVisible: false, panelLayout: PanelLayout.Inline, cssClass: "text-center"))
+    {
+        @Button(transition: "Previous")
+        @Button(transition: "Next")
+    }
+}
